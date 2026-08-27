@@ -1,0 +1,42 @@
+{
+    "vertex": "minecraft:core/liquidglass_rect",
+    "fragment": "minecraft:core/liquidglass_rect",
+    "samplers": [
+        { "name": "Sampler0" }
+    ],
+    "uniforms": [
+        { "name": "ModelViewMat",     "type": "matrix4x4", "count": 16, "values": [ 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0 ] },
+        { "name": "ProjMat",          "type": "matrix4x4", "count": 16, "values": [ 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0 ] },
+        { "name": "Resolution",       "type": "float", "count": 2, "values": [ 1920.0, 1080.0 ] },
+        { "name": "Size",             "type": "float", "count": 2, "values": [ 0.0, 0.0 ] },
+        { "name": "QuadSize",         "type": "float", "count": 2, "values": [ 0.0, 0.0 ] },
+        { "name": "ContentOffset",    "type": "float", "count": 2, "values": [ 0.0, 0.0 ] },
+        { "name": "Radius",           "type": "float", "count": 4, "values": [ 0.0, 0.0, 0.0, 0.0 ] },
+        { "name": "FillColor",        "type": "float", "count": 4, "values": [ 1.0, 1.0, 1.0, 1.0 ] },
+        { "name": "BorderColor",      "type": "float", "count": 4, "values": [ 1.0, 1.0, 1.0, 1.0 ] },
+        { "name": "BorderWidth",      "type": "float", "count": 1, "values": [ 0.0 ] },
+        { "name": "GlassTint",        "type": "float", "count": 4, "values": [ 1.0, 1.0, 1.0, 1.0 ] },
+        { "name": "GlassTintStrength","type": "float", "count": 1, "values": [ 0.15 ] },
+        { "name": "GlassRefraction",  "type": "float", "count": 1, "values": [ 1.0 ] },
+        { "name": "GlassChromatic",   "type": "float", "count": 1, "values": [ 1.0 ] },
+        { "name": "GlassBlur",        "type": "float", "count": 1, "values": [ 1.0 ] },
+        { "name": "GlassIntensity",   "type": "float", "count": 1, "values": [ 1.0 ] },
+        { "name": "GlassFrosted",     "type": "float", "count": 1, "values": [ 0.0 ] },
+        { "name": "GlassPosterize",   "type": "float", "count": 1, "values": [ 0.0 ] },
+        { "name": "GlassPixelate",    "type": "float", "count": 1, "values": [ 0.0 ] },
+        { "name": "GlassWave",        "type": "float", "count": 1, "values": [ 0.0 ] },
+        { "name": "GlassWaveSpeed",   "type": "float", "count": 1, "values": [ 1.0 ] },
+        { "name": "GlassWaveFreq",    "type": "float", "count": 1, "values": [ 0.5 ] },
+        { "name": "GlassInnerGlow",      "type": "float", "count": 1, "values": [ 0.0 ] },
+        { "name": "GlassInnerGlowSize",  "type": "float", "count": 1, "values": [ 0.4 ] },
+        { "name": "GlassInnerGlowColor", "type": "float", "count": 4, "values": [ 0.5, 0.8, 1.0, 1.0 ] },
+        { "name": "Time",             "type": "float", "count": 1, "values": [ 0.0 ] },
+        { "name": "GlobalAlpha",      "type": "float", "count": 1, "values": [ 1.0 ] },
+        { "name": "BoxCount",         "type": "int",   "count": 1, "values": [ 0 ] },
+        { "name": "BoxCenterA",       "type": "float", "count": 4, "values": [ 0.0, 0.0, 0.0, 0.0 ] },
+        { "name": "BoxHalfSizeA",     "type": "float", "count": 4, "values": [ 0.0, 0.0, 0.0, 0.0 ] },
+        { "name": "BoxRadii0",        "type": "float", "count": 4, "values": [ 0.0, 0.0, 0.0, 0.0 ] },
+        { "name": "BoxRadii1",        "type": "float", "count": 4, "values": [ 0.0, 0.0, 0.0, 0.0 ] },
+        { "name": "FilletRadius",     "type": "float", "count": 2, "values": [ 0.0, 0.0 ] }
+    ]
+}

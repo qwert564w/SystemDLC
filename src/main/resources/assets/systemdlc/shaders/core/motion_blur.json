@@ -1,0 +1,23 @@
+{
+  "vertex": "post/sobel",
+  "fragment": "core/motion_blur",
+  "samplers": [
+    { "name": "MainSampler" },
+    { "name": "MainDepthSampler" }
+  ],
+  "uniforms": [
+    { "name": "ProjMat",        "type": "matrix4x4", "count": 16, "values": [ 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0 ] },
+    { "name": "InSize",         "type": "float",     "count": 2,  "values": [ 1.0, 1.0 ] },
+    { "name": "OutSize",        "type": "float",     "count": 2,  "values": [ 1.0, 1.0 ] },
+    { "name": "MvInverse",      "type": "matrix4x4", "count": 16, "values": [ 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0 ] },
+    { "name": "ProjInverse",    "type": "matrix4x4", "count": 16, "values": [ 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0 ] },
+    { "name": "PrevModelView",  "type": "matrix4x4", "count": 16, "values": [ 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0 ] },
+    { "name": "PrevProjection", "type": "matrix4x4", "count": 16, "values": [ 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0 ] },
+    { "name": "CameraPos",      "type": "float",     "count": 3,  "values": [ 0.0, 0.0, 0.0 ] },
+    { "name": "PrevCameraPos",  "type": "float",     "count": 3,  "values": [ 0.0, 0.0, 0.0 ] },
+    { "name": "Strength",       "type": "float",     "count": 1,  "values": [ 1.0 ] },
+    { "name": "Samples",        "type": "int",       "count": 1,  "values": [ 32 ] },
+    { "name": "Centered",       "type": "int",       "count": 1,  "values": [ 0 ] },
+    { "name": "UseDepth",       "type": "int",       "count": 1,  "values": [ 1 ] }
+  ]
+}

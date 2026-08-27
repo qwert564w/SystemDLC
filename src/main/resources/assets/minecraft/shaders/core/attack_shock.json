@@ -1,0 +1,14 @@
+{
+  "vertex": "core/attack_shock",
+  "fragment": "core/attack_shock",
+  "uniforms": [
+    { "name": "ModelViewMat", "type": "matrix4x4", "count": 16, "values": [ 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0 ] },
+    { "name": "ProjMat", "type": "matrix4x4", "count": 16, "values": [ 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0 ] },
+    { "name": "uTime", "type": "float", "count": 1, "values": [ 0.0 ] },
+    { "name": "uProgress", "type": "float", "count": 1, "values": [ 0.0 ] },
+    { "name": "uSeed", "type": "float", "count": 1, "values": [ 0.0 ] },
+    { "name": "uTemperature", "type": "float", "count": 1, "values": [ 1.0 ] },
+    { "name": "uBrightness", "type": "float", "count": 1, "values": [ 1.0 ] },
+    { "name": "uTint", "type": "float", "count": 3, "values": [ 1.0, 1.0, 1.0 ] }
+  ]
+}

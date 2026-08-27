@@ -1,0 +1,12 @@
+{
+  "vertex": "core/player_outline_blur",
+  "fragment": "core/player_outline_blur",
+  "samplers": [
+    { "name": "MaskSampler" }
+  ],
+  "uniforms": [
+    { "name": "MaskSize", "type": "float", "count": 2, "values": [ 1.0, 1.0 ] },
+    { "name": "Direction", "type": "float", "count": 2, "values": [ 1.0, 0.0 ] },
+    { "name": "Radius", "type": "float", "count": 1, "values": [ 24.0 ] }
+  ]
+}

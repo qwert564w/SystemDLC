@@ -1,0 +1,24 @@
+{
+    "targets": {
+        "swap": {}
+    },
+    "passes": [
+        {
+            "program": "minecraft:core/saturation_pass",
+            "inputs": [
+                { "sampler_name": "In", "target": "minecraft:main" }
+            ],
+            "output": "swap",
+            "uniforms": [
+                { "name": "Saturation", "values": [ 1.0 ] }
+            ]
+        },
+        {
+            "program": "minecraft:post/blit",
+            "inputs": [
+                { "sampler_name": "In", "target": "swap" }
+            ],
+            "output": "minecraft:main"
+        }
+    ]
+}

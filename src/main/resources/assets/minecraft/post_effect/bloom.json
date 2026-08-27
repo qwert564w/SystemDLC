@@ -1,0 +1,84 @@
+{
+    "targets": {
+        "swap": {},
+        "blurred": {},
+        "wide": {},
+        "composited": {}
+    },
+    "passes": [
+        {
+            "program": "minecraft:core/bloom_extract",
+            "inputs": [
+                { "sampler_name": "In", "target": "minecraft:main", "bilinear": true }
+            ],
+            "output": "swap",
+            "uniforms": [
+                { "name": "Threshold", "values": [ 0.6 ] },
+                { "name": "Intensity", "values": [ 1.0 ] }
+            ]
+        },
+        {
+            "program": "minecraft:core/bloom_blur",
+            "inputs": [
+                { "sampler_name": "In", "target": "swap", "bilinear": true }
+            ],
+            "output": "blurred",
+            "uniforms": [
+                { "name": "BlurDir", "values": [ 1.0, 0.0 ] },
+                { "name": "Radius", "values": [ 6.0 ] }
+            ]
+        },
+        {
+            "program": "minecraft:core/bloom_blur",
+            "inputs": [
+                { "sampler_name": "In", "target": "blurred", "bilinear": true }
+            ],
+            "output": "swap",
+            "uniforms": [
+                { "name": "BlurDir", "values": [ 0.0, 1.0 ] },
+                { "name": "Radius", "values": [ 6.0 ] }
+            ]
+        },
+        {
+            "program": "minecraft:core/bloom_blur",
+            "inputs": [
+                { "sampler_name": "In", "target": "swap", "bilinear": true }
+            ],
+            "output": "wide",
+            "uniforms": [
+                { "name": "BlurDir", "values": [ 1.0, 0.0 ] },
+                { "name": "Radius", "values": [ 24.0 ] }
+            ]
+        },
+        {
+            "program": "minecraft:core/bloom_blur",
+            "inputs": [
+                { "sampler_name": "In", "target": "wide", "bilinear": true }
+            ],
+            "output": "blurred",
+            "uniforms": [
+                { "name": "BlurDir", "values": [ 0.0, 1.0 ] },
+                { "name": "Radius", "values": [ 24.0 ] }
+            ]
+        },
+        {
+            "program": "minecraft:core/bloom_composite",
+            "inputs": [
+                { "sampler_name": "Scene",  "target": "minecraft:main" },
+                { "sampler_name": "Bloom",  "target": "swap",    "bilinear": true },
+                { "sampler_name": "BloomM", "target": "blurred", "bilinear": true }
+            ],
+            "output": "composited",
+            "uniforms": [
+                { "name": "BloomBoost", "values": [ 1.5 ] }
+            ]
+        },
+        {
+            "program": "minecraft:post/blit",
+            "inputs": [
+                { "sampler_name": "In", "target": "composited" }
+            ],
+            "output": "minecraft:main"
+        }
+    ]
+}

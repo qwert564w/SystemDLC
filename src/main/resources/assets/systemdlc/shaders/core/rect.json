@@ -1,0 +1,32 @@
+{
+  "vertex": "core/rect",
+  "fragment": "core/rect",
+  "samplers": [],
+  "uniforms": [
+    { "name": "ModelViewMat", "type": "matrix4x4", "count": 16, "values": [1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1] },
+    { "name": "ProjMat", "type": "matrix4x4", "count": 16, "values": [1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1] },
+    { "name": "Size", "type": "float", "count": 2, "values": [0,0] },
+    { "name": "QuadSize", "type": "float", "count": 2, "values": [0,0] },
+    { "name": "ContentOffset", "type": "float", "count": 2, "values": [0,0] },
+    { "name": "Radius", "type": "float", "count": 4, "values": [0,0,0,0] },
+    { "name": "FillColor", "type": "float", "count": 4, "values": [1,1,1,1] },
+    { "name": "BorderColor", "type": "float", "count": 4, "values": [0,0,0,0] },
+    { "name": "BorderWidth", "type": "float", "count": 1, "values": [0] },
+    { "name": "ShadowColor", "type": "float", "count": 4, "values": [0,0,0,0.2] },
+    { "name": "ShadowOffset", "type": "float", "count": 2, "values": [0,0] },
+    { "name": "ShadowBlur", "type": "float", "count": 1, "values": [0] },
+    { "name": "GlobalAlpha", "type": "float", "count": 1, "values": [1] },
+    { "name": "SegmentCount", "type": "int", "count": 1, "values": [0] },
+    { "name": "SegCentersA", "type": "float", "count": 4, "values": [0,0,0,0] },
+    { "name": "SegCentersB", "type": "float", "count": 4, "values": [0,0,0,0] },
+    { "name": "SegHalfWidthsA", "type": "float", "count": 4, "values": [0,0,0,0] },
+    { "name": "SegHalfWidthsB", "type": "float", "count": 4, "values": [0,0,0,0] },
+    { "name": "SegmentRadius", "type": "float", "count": 1, "values": [0] },
+    { "name": "BoxCount", "type": "int", "count": 1, "values": [0] },
+    { "name": "BoxCenterA", "type": "float", "count": 4, "values": [0,0,0,0] },
+    { "name": "BoxHalfSizeA", "type": "float", "count": 4, "values": [0,0,0,0] },
+    { "name": "BoxRadii0", "type": "float", "count": 4, "values": [0,0,0,0] },
+    { "name": "BoxRadii1", "type": "float", "count": 4, "values": [0,0,0,0] },
+    { "name": "FilletRadius", "type": "float", "count": 2, "values": [0,0] }
+  ]
+}

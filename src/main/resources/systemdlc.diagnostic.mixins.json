@@ -1,0 +1,18 @@
+{
+  "required": false,
+  "minVersion": "0.8",
+  "package": "recovered.fabric.mixin.diagnostic",
+  "compatibilityLevel": "JAVA_21",
+  "client": [
+    "ClassByteSourceMixin",
+    "ClientInitializationMixin",
+    "SystemInitializationMixin",
+    "ModuleRegistryMixin",
+    "InputSystemMixin",
+    "InputPollMixin",
+    "GuiModuleMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

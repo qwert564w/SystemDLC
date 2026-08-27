@@ -1,0 +1,44 @@
+package client.api;
+
+public interface SwapWheelMetrics extends UiMetrics {
+   public float value292 = 335.0F;
+   public float value293 = 12.0F;
+   public float value287 = 14.0F;
+   public float value288 = 12.0F;
+   public float value289 = 12.0F;
+   public float value290 = 8.0F;
+   public float value241 = 14.0F;
+   public float value242 = 12.0F;
+   public float value243 = 28.0F;
+   public float value244 = 10.0F;
+   public float value245 = 303.0F;
+   public float value246 = 26.0F;
+   public float value247 = 16.0F;
+   public float value248 = 8.0F;
+   public float value249 = 12.0F;
+   public float value250 = 8.0F;
+   public float value251 = 8.0F;
+   public float value252 = 311.0F;
+   public float value253 = 148.0F;
+   public float value254 = 4.0F;
+   public float value255 = 8.0F;
+   public float value256 = 26.0F;
+   public float value257 = 4.0F;
+   public float value258 = 6.0F;
+   public float value259 = 16.0F;
+   public float value260 = 0.85F;
+   public float value261 = 4.5F;
+   public float value262 = 28.0F;
+   public float value263 = 16.0F;
+   public float value264 = 2.0F;
+   public float value265 = 12.0F;
+   public float value266 = 6.0F;
+   public float value267 = 40.0F;
+   public float value268 = 4.0F;
+   public float value269 = 48.0F;
+   public float value270 = 311.0F;
+   public float value271 = 28.0F;
+   public float value272 = 8.0F;
+   public float value273 = 8.0F;
+   public float value274 = 12.0F;
+}

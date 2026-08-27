@@ -1,0 +1,10 @@
+{
+  "vertex": "core/box_glow_blit",
+  "fragment": "core/box_glow_blit",
+  "samplers": [
+    { "name": "InSampler" }
+  ],
+  "uniforms": [
+    { "name": "Intensity", "type": "float", "count": 1, "values": [ 1.0 ] }
+  ]
+}

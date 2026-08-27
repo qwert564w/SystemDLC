@@ -1,0 +1,16 @@
+{
+  "vertex": "core/svg",
+  "fragment": "core/svg",
+  "samplers": [],
+  "uniforms": [
+    { "name": "ModelViewMat", "type": "matrix4x4", "count": 16, "values": [1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1] },
+    { "name": "ProjMat", "type": "matrix4x4", "count": 16, "values": [1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1] },
+    { "name": "ViewBox", "type": "float", "count": 4, "values": [0,0,1,1] },
+    { "name": "PaddingSvg", "type": "float", "count": 1, "values": [0] },
+    { "name": "StrokeWidth", "type": "float", "count": 1, "values": [1] },
+    { "name": "Color", "type": "float", "count": 4, "values": [1,1,1,1] },
+    { "name": "GlobalAlpha", "type": "float", "count": 1, "values": [1] },
+    { "name": "Filled", "type": "float", "count": 1, "values": [0] },
+    { "name": "SegmentCount", "type": "float", "count": 1, "values": [0] }
+  ]
+}

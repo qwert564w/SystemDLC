@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "id": "systemdlcrecovered",
+  "version": "1.0.0",
+  "name": "SystemDLC Recovered",
+  "environment": "client",
+  "entrypoints": {
+    "preLaunch": [
+      "recovered.fabric.nativebridge.SystemDlcPreLaunch"
+    ],
+    "client": [
+      "client.util.ClientEntrypoint"
+    ]
+  },
+  "mixins": [
+    "systemdlc.profile.mixins.json",
+    "systemdlc.diagnostic.mixins.json",
+    "systemdlc.hooks.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.16.10",
+    "minecraft": "=1.21.4",
+    "java": ">=21"
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "recovered.fabric.mixin.profile",
+  "compatibilityLevel": "JAVA_21",
+  "client": [
+    "HudProfileMixin",
+    "SessionProfileMixin",
+    "ClientTickMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "required": false,
+  "minVersion": "0.8",
+  "package": "recovered.fabric.mixin.hooks",
+  "compatibilityLevel": "JAVA_21",
+  "client": [
+    "ClientConnectionMixin",
+    "MinecraftClientHooksMixin",
+    "ClientPlayNetworkHandlerMixin",
+    "InGameHudMixin",
+    "WorldRendererMixin",
+    "GameRendererMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "refmap": "systemdlc-recovered-refmap.json"
+}

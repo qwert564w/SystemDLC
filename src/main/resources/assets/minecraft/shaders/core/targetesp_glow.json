@@ -1,0 +1,9 @@
+{
+  "vertex": "core/targetesp_glow",
+  "fragment": "core/targetesp_glow",
+  "samplers": [],
+  "uniforms": [
+    { "name": "ModelViewMat", "type": "matrix4x4", "count": 16, "values": [1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1] },
+    { "name": "ProjMat", "type": "matrix4x4", "count": 16, "values": [1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1] }
+  ]
+}

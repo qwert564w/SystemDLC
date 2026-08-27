@@ -1,0 +1,51 @@
+plugins {
+    id 'fabric-loom' version '1.9-SNAPSHOT'
+    id 'java'
+}
+
+version = '1.0.0'
+group = 'recovered'
+
+base {
+    archivesName = 'systemdlc-recovered'
+}
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
+    }
+    sourceCompatibility = JavaVersion.VERSION_21
+    targetCompatibility = JavaVersion.VERSION_21
+    // Uncomment to attach sources jar on build:
+    // withSourcesJar()
+}
+
+repositories {
+    maven { name = 'Fabric'; url = 'https://maven.fabricmc.net/' }
+    mavenCentral()
+}
+
+dependencies {
+    // Matches fabric.mod.json: minecraft 1.21.4, java 21, fabricloader >=0.16.10
+    minecraft 'com.mojang:minecraft:1.21.4'
+    mappings 'net.fabricmc:yarn:1.21.4+build.8:v2'
+    modImplementation 'net.fabricmc:fabric-loader:0.16.10'
+    // Needed so the mod's own assets (shaders, textures, sounds) are registered as a resource pack.
+    modImplementation 'net.fabricmc.fabric-api:fabric-api:0.119.4+1.21.4'
+}
+
+tasks.withType(JavaCompile).configureEach {
+    it.options.encoding = 'UTF-8'
+    it.options.release = 21
+}
+
+tasks.withType(JavaCompile).configureEach {
+    it.options.compilerArgs += ['-Xmaxerrs', '10000', '-Xdiags:verbose']
+}
+
+// The native library installs the game hooks via ClassRedefiner, so the client is
+// inert without it. Set systemdlc.native=false only to test the pure-Java path.
+tasks.named('runClient') {
+    jvmArgs '-Dsystemdlc.native=true', '--enable-native-access=ALL-UNNAMED',
+            '--add-opens', 'jdk.attach/com.sun.tools.attach=ALL-UNNAMED'
+}
