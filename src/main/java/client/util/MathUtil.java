@@ -142,7 +142,7 @@ public class MathUtil {
          }
       }
 
-      result[0] = f2; result[1] = f1; result[2] = f; return result;
+      return new float[]{f2, f1, f};
    }
 
    public static int getIntByFloatIntFloatFloat(float value, int count, float value2, float value3) {
