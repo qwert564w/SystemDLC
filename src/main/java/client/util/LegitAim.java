@@ -2,7 +2,7 @@ package client.util;
 
 import client.setting.BooleanSetting;
 import client.setting.SliderSetting;
-import java.security.SecureRandom;
+import java.util.concurrent.ThreadLocalRandom;
 import java.util.Arrays;
 import java.util.List;
 import net.minecraft.entity.Entity;
@@ -15,7 +15,7 @@ public class LegitAim extends AimMode {
    private SliderSetting maxLerp;
    private SliderSetting minLerp;
    private BooleanSetting randomizaciya;
-   private final SecureRandom secureRandom;
+   // private final SecureRandom secureRandom; // Optimized: SecureRandom causes massive stuttering/lag spikes due to OS entropy blocking.
    private int value;
    private double value2;
    private long time;
@@ -48,7 +48,7 @@ public class LegitAim extends AimMode {
       booleansetting.setName("Рандомизация");
       booleansetting.setDescription("Добавлять фазовые случайные колебания скорости");
       this.randomizaciya = booleansetting;
-      this.secureRandom = new SecureRandom();
+      // this.secureRandom = new SecureRandom();
       this.doubleArray = new double[15];
       this.floatArray = new float[5];
    }
@@ -58,8 +58,8 @@ public class LegitAim extends AimMode {
          return value < 20.0F ? 1.0F : (value > 90.0F ? 0.95F : 0.97F);
       } else {
          return value < 20.0F
-            ? 0.95F + this.secureRandom.nextFloat() * 0.1F
-            : (value > 90.0F ? 0.8F + this.secureRandom.nextFloat() * 0.3F : 0.85F + this.secureRandom.nextFloat() * 0.25F);
+            ? 0.95F + ThreadLocalRandom.current().nextFloat() * 0.1F
+            : (value > 90.0F ? 0.8F + ThreadLocalRandom.current().nextFloat() * 0.3F : 0.85F + ThreadLocalRandom.current().nextFloat() * 0.25F);
       }
    }
 
@@ -102,24 +102,24 @@ public class LegitAim extends AimMode {
       float f1;
       if (flag) {
          f1 = switch (this.value) {
-            case 0 -> 0.6F + this.secureRandom.nextFloat() * 0.4F;
-            case 1 -> 0.8F + this.secureRandom.nextFloat() * 0.3F;
-            case 2 -> 0.5F + this.secureRandom.nextFloat() * 0.3F;
-            case 3 -> 0.7F + this.secureRandom.nextFloat() * 0.5F;
-            case 4 -> 0.4F + this.secureRandom.nextFloat() * 0.4F;
-            case 5 -> 0.9F + this.secureRandom.nextFloat() * 0.2F;
-            default -> 0.7F + this.secureRandom.nextFloat() * 0.4F;
-         } * (0.9F + this.secureRandom.nextFloat() * 0.3F);
+            case 0 -> 0.6F + ThreadLocalRandom.current().nextFloat() * 0.4F;
+            case 1 -> 0.8F + ThreadLocalRandom.current().nextFloat() * 0.3F;
+            case 2 -> 0.5F + ThreadLocalRandom.current().nextFloat() * 0.3F;
+            case 3 -> 0.7F + ThreadLocalRandom.current().nextFloat() * 0.5F;
+            case 4 -> 0.4F + ThreadLocalRandom.current().nextFloat() * 0.4F;
+            case 5 -> 0.9F + ThreadLocalRandom.current().nextFloat() * 0.2F;
+            default -> 0.7F + ThreadLocalRandom.current().nextFloat() * 0.4F;
+         } * (0.9F + ThreadLocalRandom.current().nextFloat() * 0.3F);
          if (i < 45L) {
-            f1 *= 0.7F + this.secureRandom.nextFloat() * 0.4F;
+            f1 *= 0.7F + ThreadLocalRandom.current().nextFloat() * 0.4F;
          } else if (i > 300L) {
-            f1 *= 1.1F + this.secureRandom.nextFloat() * 0.4F;
+            f1 *= 1.1F + ThreadLocalRandom.current().nextFloat() * 0.4F;
          }
 
          if (value2 > 120.0F) {
             f1 *= 1.3F;
          } else if (value2 < 15.0F) {
-            f1 *= 0.5F + this.secureRandom.nextFloat() * 0.4F;
+            f1 *= 0.5F + ThreadLocalRandom.current().nextFloat() * 0.4F;
          }
 
          if (this.value4 > 0.0F) {
