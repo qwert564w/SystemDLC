@@ -16,10 +16,12 @@ import net.minecraft.util.math.Vec3d;
 
 public class TargetSelector {
    private static double getDoubleByLivingEntity(LivingEntity livingEntity) {
+      if (Feature.mc.player == null) return Double.MAX_VALUE;
       return Feature.mc.player.distanceTo(livingEntity);
    }
 
    private static double getDoubleByLivingEntity2(LivingEntity livingEntity) {
+      if (Feature.mc.player == null) return Double.MAX_VALUE;
       return Feature.mc.player.distanceTo(livingEntity);
    }
 
