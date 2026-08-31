@@ -1,6 +1,7 @@
 package client.util;
 
 public class MathUtil {
+   private static final ThreadLocal<float[]> FLOAT_ARRAY_POOL = ThreadLocal.withInitial(() -> new float[3]);
    public static int getIntByFloatFloatFloat(float value, float value2, float value3) {
       float f;
       float f1;
@@ -36,6 +37,7 @@ public class MathUtil {
    }
 
    public static float[] getFloatArrayByInt(int count) {
+      float[] result = FLOAT_ARRAY_POOL.get();
       float f = (count >> 16 & 0xFF) / 255.0F;
       float f1 = (count >> 8 & 0xFF) / 255.0F;
       float f2 = (count & 0xFF) / 255.0F;
@@ -43,7 +45,7 @@ public class MathUtil {
       float f4 = Math.min(f, Math.min(f1, f2));
       float f5 = (f3 + f4) / 2.0F;
       if (f3 == f4) {
-         return new float[]{0.0F, 0.0F, f5};
+         result[0] = 0.0F; result[1] = 0.0F; result[2] = f5; return result;
       } else {
          float f6 = f3 - f4;
          float f7 = f5 > 0.5F ? f6 / (2.0F - f3 - f4) : f6 / (f3 + f4);
@@ -56,7 +58,7 @@ public class MathUtil {
             f8 = (f - f1) / f6 + 4.0F;
          }
 
-         return new float[]{f8 / 6.0F, f7, f5};
+         result[0] = f8 / 6.0F; result[1] = f7; result[2] = f5; return result;
       }
    }
 
@@ -140,7 +142,7 @@ public class MathUtil {
          }
       }
 
-      return new float[]{f2, f1, f};
+      result[0] = f2; result[1] = f1; result[2] = f; return result;
    }
 
    public static int getIntByFloatIntFloatFloat(float value, int count, float value2, float value3) {
