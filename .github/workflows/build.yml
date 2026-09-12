@@ -1,0 +1,61 @@
+name: Build and Release
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Set up JDK 17
+      uses: actions/setup-java@v4
+      with:
+        java-version: '17'
+        distribution: 'temurin'
+        cache: gradle
+    
+    - name: Grant execute permission for gradlew
+      run: chmod +x gradlew
+    
+    - name: Build with Gradle
+      run: ./gradlew build -x test
+    
+    - name: Create Release
+      id: create_release
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: v1.0-coat-of-arms-${{ github.run_number }}
+        release_name: v1.0 - Герб России (Build ${{ github.run_number }})
+        body: |
+          ## Изменения
+          
+          ✅ **Watermark заменён на герб России**
+          - Белый двуглавый орёл
+          - Красный щит с золотыми коронами
+          - Текст "RUS"
+          
+          ✅ **Убран мусорный код**
+          
+          ✅ **Улучшен HUD layout**
+          
+          ---
+          *Автоматическая сборка #${{ github.run_number }}*
+        draft: false
+        prerelease: false
+    
+    - name: Upload Release Asset
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: ./build/libs/*.jar
+        asset_name: SystemDLC-CoatOfArms.jar
+        asset_content_type: application/java-archive
