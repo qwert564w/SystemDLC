@@ -140,11 +140,10 @@ public class AttackEffects extends Module {
                      ShaderProgram shaderprogram = this.getShaderProgramByInt(attackeffectentry.getEffect());
                      if (shaderprogram != null) {
                         RenderSystem.setShader(shaderprogram);
-                        if (MathUtil.isInt(attackeffectentry.getColor())) {
-                           RenderSystem.blendFunc(SrcFactor.SRC_ALPHA, DstFactor.ONE_MINUS_SRC_ALPHA);
-                        } else {
-                           RenderSystem.blendFunc(SrcFactor.ONE, DstFactor.ONE_MINUS_SRC_COLOR);
-                        }
+                        
+                        // FIX: Additive blending для сочной плазмы (убирает белый квадрат)
+                        // SRC_ALPHA + ONE = цвета складываются, создавая эффект свечения (glow)
+                        RenderSystem.blendFunc(SrcFactor.SRC_ALPHA, DstFactor.ONE); 
 
                         float f1 = Math.min(1.0F, (float)(i - attackeffectentry.getStartMs()) / (float)attackeffectentry.getDurationMs());
                         if (this.glUniform != null) {
@@ -177,6 +176,9 @@ public class AttackEffects extends Module {
                         }
 
                         this.onMatrix4fAttackEffectEntryVec3d(matrix4f, attackeffectentry, vec3d);
+                     } else {
+                        // Fallback: Если шейдер не загрузился (белый квадрат), рисуем процедурную плазму
+                        renderProceduralPlasma(matrix4f, attackeffectentry, vec3d, f1);
                      }
                   }
                } finally {
@@ -188,6 +190,34 @@ public class AttackEffects extends Module {
             }
          }
       }
+   }
+
+   // Процедурная плазма на случай, если текстуры шейдеров отвалятся
+   private void renderProceduralPlasma(Matrix4f matrix4f, AttackEffectEntry entry, Vec3d cameraPos, float progress) {
+      float f = (float)(entry.getPos().x - cameraPos.x);
+      float f1 = (float)(entry.getPos().y - cameraPos.y);
+      float f2 = (float)(entry.getPos().z - cameraPos.z);
+      float radius = entry.getRadius() * 1.4F * progress;
+      int segments = 36;
+      float alpha = 1.0F - progress;
+      int color = entry.getColor() | ((int)(alpha * 255) << 24);
+      
+      BufferBuilder bufferbuilder = Tessellator.getInstance().begin(DrawMode.QUADS, VertexFormats.POSITION_COLOR);
+      for (int i = 0; i < segments; i++) {
+         float angle1 = (float) Math.toRadians(i * (360.0f / segments));
+         float angle2 = (float) Math.toRadians((i + 1) * (360.0f / segments));
+         
+         double x1 = Math.cos(angle1) * radius;
+         double z1 = Math.sin(angle1) * radius;
+         double x2 = Math.cos(angle2) * radius;
+         double z2 = Math.sin(angle2) * radius;
+         
+         bufferbuilder.vertex(matrix4f, f + (float)x1, f1 + 0.1F, f2 + (float)z1).color(color);
+         bufferbuilder.vertex(matrix4f, f + (float)x1, f1 - 0.1F, f2 + (float)z1).color(color);
+         bufferbuilder.vertex(matrix4f, f + (float)x2, f1 - 0.1F, f2 + (float)z2).color(color);
+         bufferbuilder.vertex(matrix4f, f + (float)x2, f1 + 0.1F, f2 + (float)z2).color(color);
+      }
+      BufferRenderer.drawWithGlobalProgram(bufferbuilder.end());
    }
 
    private void onMatrix4fAttackEffectEntryVec3d(Matrix4f matrix4f, AttackEffectEntry attackEffectEntry, Vec3d vec3d) {
