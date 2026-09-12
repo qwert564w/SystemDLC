@@ -37,9 +37,13 @@ public abstract class ModuleWidget<M extends ButtonWidget> extends PanelWidget {
    @Override
    public boolean isIntDoubleDouble(int count, double value, double value2) {
       if (this.check4() && this.buttonWidget.check()) {
-         this.buttonWidget.isIntDoubleDouble(count, value, value2);
-         return true;
-      } else if (count != 0) {
+         // FIX: Сохраняем результат клика! Если слайдер/настройка перехватили клик, выходим
+         boolean consumed = this.buttonWidget.isIntDoubleDouble(count, value, value2);
+         if (consumed) {
+             return true; 
+         }
+      } 
+      if (count != 0) { // Если это не ЛКМ (count == 0)
          return false;
       } else {
          float f4 = this.value235;
