@@ -33,7 +33,6 @@ public class StatsHud extends RenderElement {
    private static final float value277 = 3.0F;
    private static final float value278 = 6.0F;
    private static final float value279 = 0.001F;
-   private static final String text = "System";
    private static final float value280 = 0.06F;
    private static final float value281 = 0.1F;
    private static final float value282 = 0.25F;
@@ -491,22 +490,50 @@ public class StatsHud extends RenderElement {
                   float f10 = this.floatArray6[k1];
                   float f11 = f * f9;
                   float f12 = f10 + this.getFloatByInt2(k1);
-                  if (hudElementArray[k1] == HudElement.LOGO) {
-                     CategoryType categorytype2 = CategoryType.LOGO;
-                     float f41 = IconMetrics.getFloatByCategoryType2(CategoryType.LOGO);
-                     float f42 = IconMetrics.getFloatByCategoryType(CategoryType.LOGO);
-                     float f27 = 1.0F;
-                     float f26 = f42;
-                     float f25 = f41;
-                     CategoryType categorytype1 = categorytype2;
-                     this.onFloatFloatFloatFloatCategoryTypeFloatFloatMatrix4f(f26, f12, f27, f11, categorytype1, f25, f36, matrix4f);
-                     float f40 = f12 + this.getFloat29();
-                     int i1 = Theme.foreground();
-                     float f29 = 14.0F;
-                     float f28 = f40;
-                     String s = "System";
-                     TextShader.onFloatFloatIntFloatFloatStringMatrix4f(f37, f28, i1, f29, f11, s, matrix4f);
-                  } else {
+         if (hudElementArray[k1] == HudElement.LOGO) {
+            // Герб России (белый двуглавый орёл)
+            int WHITE = 0xFFFFFFFF;
+            int GOLD = 0xFFFFD700;
+            float baseX = f12;
+            float baseY = f36;
+            float alpha = f11;
+            
+            // Красный щит (фон герба)
+            ShapeShader.onFloatFloatIntMatrix4fFloatFloatFloatFloat(
+               6.0F, baseY, 0xFFCE1126, matrix4f, 22.0F, 24.0F, alpha, baseX
+            );
+            
+            // Белый двуглавый орёл (тело)
+            ShapeShader.onFloatFloatIntMatrix4fFloatFloatFloatFloat(
+               2.0F, baseY + 8, WHITE, matrix4f, 14.0F, 12.0F, alpha, baseX + 4
+            );
+            
+            // Две головы (белые)
+            ShapeShader.onFloatFloatIntMatrix4fFloatFloatFloatFloat(
+               2.0F, baseY + 3, WHITE, matrix4f, 7.0F, 7.0F, alpha, baseX + 2
+            );
+            ShapeShader.onFloatFloatIntMatrix4fFloatFloatFloatFloat(
+               2.0F, baseY + 3, WHITE, matrix4f, 7.0F, 7.0F, alpha, baseX + 13
+            );
+            
+            // Три золотые короны
+            ShapeShader.onFloatFloatIntMatrix4fFloatFloatFloatFloat(
+               1.0F, baseY + 1, GOLD, matrix4f, 5.0F, 3.0F, alpha, baseX + 8.5F
+            );
+            ShapeShader.onFloatFloatIntMatrix4fFloatFloatFloatFloat(
+               1.0F, baseY + 2, GOLD, matrix4f, 3.0F, 2.0F, alpha, baseX + 4
+            );
+            ShapeShader.onFloatFloatIntMatrix4fFloatFloatFloatFloat(
+               1.0F, baseY + 2, GOLD, matrix4f, 3.0F, 2.0F, alpha, baseX + 15
+            );
+            
+            // Белый текст "RUS"
+            float f40 = f12 + this.getFloat29();
+            float f29 = 14.0F;
+            float f28 = f40;
+            String s = "RUS";
+            TextShader.onFloatFloatIntFloatFloatStringMatrix4f(f37, f28, WHITE, f29, f11, s, matrix4f);
+         } else {
                      if (this.value288 > 0.001F) {
                         CategoryType categorytype = categoryTypeArray[k1];
                         float f38 = IconMetrics.getFloatByCategoryType2(categorytype);
