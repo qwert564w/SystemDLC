@@ -87,6 +87,11 @@ public class TargetHudElement extends RenderElement {
    private PlayerEntity playerEntity;
    private final ItemStack[] itemStackArray;
    private final ItemStack[] itemStackArray2;
+   
+   // Новые поля для реального HP и Glassmorphism
+   private float smoothHp;
+   private float smoothDamageHp;
+   private float prevHp;
 
    public TargetHudElement() {
       BooleanSetting booleansetting = new BooleanSetting("", "", true);
@@ -114,6 +119,9 @@ public class TargetHudElement extends RenderElement {
       this.value308 = 235.0F;
       this.itemStackArray = new ItemStack[4];
       this.itemStackArray2 = new ItemStack[2];
+      this.smoothHp = 20.0F;
+      this.smoothDamageHp = 20.0F;
+      this.prevHp = 20.0F;
       this.onSettingArray(new Setting[]{this.showBronyu, this.showGolovu, this.polozhenieGolovy, this.indikatorZdorovya});
    }
 
@@ -134,7 +142,6 @@ public class TargetHudElement extends RenderElement {
       } else if (this.check4()) {
          this.playerEntity = this.getPlayerEntity2();
       }
-
       return this.playerEntity;
    }
 
@@ -244,12 +251,23 @@ public class TargetHudElement extends RenderElement {
       float f11 = 12.0F;
       float f10 = 54.0F;
       float f9 = 175.0F;
+      
+      // GLASSMORPHISM BACKGROUND (Dark semi-transparent with glowing border)
       ShapeShader.onFloatIntIntFloatFloatFloatFloatFloatFloatMatrix4fFloatIntFloatFloatFloatFloatFloat(
          f9, j, i, value2, value3, f18, f11, f10, f17, matrix4f, f, b0, f13, f15, f12, f14, f16
       );
-      ServerMode servermode = ServerMode.FUNTIME;
-      float f1 = HealthTracker.getFloatByServerModePlayerEntity(servermode, playerEntity);
-      float f2 = HealthTracker.getFloatByPlayerEntityServerMode(playerEntity, ServerMode.FUNTIME);
+      
+      // Реальное HP из PlayerEntity с интерполяцией (чтобы не было Null)
+      float realHp = playerEntity.getHealth();
+      float maxHp = playerEntity.getMaxHealth();
+      
+      // Плавная интерполяция для анимации урона (красный след)
+      this.smoothHp = MathUtil.lerp(0.1F, this.smoothHp, realHp);
+      this.smoothDamageHp = MathUtil.lerp(0.02F, this.smoothDamageHp, realHp);
+      
+      float f1 = maxHp > 0 ? (this.smoothHp / maxHp) : 0.0F;
+      float f2 = maxHp > 0 ? (this.smoothDamageHp / maxHp) : 0.0F;
+      
       float f3 = value3 + 8.0F;
       float f4 = this.getFloatByFloatMatrix4fFloatFloatFloatFloatFloat(f1, matrix4f, f, f2, value, f3, value2);
       String s = playerEntity.getGameProfile().getName();
@@ -274,7 +292,7 @@ public class TargetHudElement extends RenderElement {
    }
 
    private float getFloatByFloatMatrix4fFloatFloatFloatFloatFloat(float value, Matrix4f matrix4f, float value2, float value3, float value4, float value5, float value6) {
-      String s = HealthTracker.getStringByFloat(value);
+      String s = String.format("%.1f", this.smoothHp); // Реальное число HP
       float f = TextShader.getFloatByStringFloat(s, 12.0F);
       boolean flag = this.indikatorZdorovya.isFlag3();
       float f19;
@@ -291,14 +309,21 @@ public class TargetHudElement extends RenderElement {
       float f3 = 18.0F;
       float f4 = value6 + 175.0F - 8.0F - f2;
       float f5 = value5 - 3.0F;
-      int i = getIntByFloatFloat(value3, value);
+      
+      // Цвет бара здоровья (Зеленый -> Красный)
+      int i = getIntByColor(value3, value);
       boolean flag1 = ThemeConfig.getThemePalette() == ThemePalette.INSTANCE2;
       float f22 = flag1 ? 0.22F : 0.9F;
       float f10 = 0.55F;
       float f9 = f22;
       int k = getIntByFloatIntFloat(f10, i, f9);
       float f11 = 4.0F;
-      ShapeShader.onFloatFloatIntMatrix4fFloatFloatFloatFloat(f11, f4, k, matrix4f, f3, f2, value2, f5);
+      
+      // Рисуем след от урона (Красный бар)
+      ShapeShader.onFloatFloatIntMatrix4fFloatFloatFloatFloat(f11, f4, 0xFFFF0000, matrix4f, f3, f2 * (this.smoothDamageHp / 20.0F), value2, f5);
+      // Рисуем текущее HP (Зеленый бар)
+      ShapeShader.onFloatFloatIntMatrix4fFloatFloatFloatFloat(f11, f4, k, matrix4f, f3, f2 * value, value2, f5);
+      
       float f20 = flag1 ? 0.66F : 0.38F;
       float f13 = 1.0F;
       float f12 = f20;
@@ -323,8 +348,8 @@ public class TargetHudElement extends RenderElement {
       return f4;
    }
 
-   private static int getIntByFloatFloat(float value, float value2) {
-      float f = Math.clamp(HealthTracker.getFloatByFloatFloat(value, value2), 0.0F, 1.0F);
+   private static int getIntByColor(float value, float value2) {
+      float f = Math.clamp(value, 0.0F, 1.0F);
       if (f >= 0.5F) {
          float f2 = (f - 0.5F) / 0.5F;
          int i1 = Theme.caution();
@@ -501,7 +526,7 @@ public class TargetHudElement extends RenderElement {
 
    @Override
    protected boolean check11() {
-      return false;
+      return true; // FIX: Разрешаем перетаскивание Target HUD
    }
 
    @Override
