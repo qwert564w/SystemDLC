@@ -63,7 +63,7 @@ public class TriggerBot extends Module {
         double bestDist = Double.MAX_VALUE;
         double maxAngle = currentAngle * 1.5;
 
-        for (Entity e : this.world().getEntities()) {
+        for (Entity e : this.world().getPlayers()) {
             if (!(e instanceof LivingEntity le) || !e.isAlive()) continue;
             if (this.playersOnly.isFlag3() && !(e instanceof PlayerEntity)) continue;
             
