@@ -9,19 +9,19 @@ import java.util.Optional;
 public class SpoilerManager {
     
     // Обход Polar: Смена сессии без закрытия клиента (Runtime Session Spoofing)
-    public static void spoofSession(String newUsername, String newUUID, String token) {
+    public static void spoofSession(String newUsername, String java.util.UUID.fromString(newUUID), String token) {
         try {
             MinecraftClient mc = MinecraftClient.getInstance();
             Field sessionField = MinecraftClient.class.getDeclaredField("session"); 
             sessionField.setAccessible(true);
             
             // Создаем новую сессию (обход проверки Microsoft/Mojang на уровне клиента)
-            Session newSession = new Session(newUsername, newUUID, token, 
+            Session newSession = new Session(newUsername, java.util.UUID.fromString(newUUID), token, 
                 Optional.empty(), Optional.empty(), Session.AccountType.MOJANG);
             sessionField.set(mc, newSession);
             
             // Чистим кэш скинов и пропертей, чтобы античит не спалил старый UUID
-            mc.getSessionProperties().clear(); 
+            // mc.getSessionProperties().clear(); 
         } catch (Exception e) {
             e.printStackTrace();
         }
