@@ -9,7 +9,7 @@ import java.util.Optional;
 public class SpoilerManager {
     
     // Обход Polar: Смена сессии без закрытия клиента (Runtime Session Spoofing)
-    public static void spoofSession(String newUsername, String java.util.UUID.fromString(newUUID), String token) {
+    public static void spoofSession(String newUsername, String newUUID, String token) {
         try {
             MinecraftClient mc = MinecraftClient.getInstance();
             Field sessionField = MinecraftClient.class.getDeclaredField("session"); 
