@@ -33,6 +33,9 @@ public class AimAssist extends Module {
     private Vec3d aimPoint = Vec3d.ZERO;
     private long lastFrame = 0;
 
+    public void onEnable() {}
+    public void onDisable() {}
+
     public AimAssist() {
         super("AimAssist", Category.COMBAT);
         this.fov = new SliderSetting("", "", 90, 10, 180, 1);
