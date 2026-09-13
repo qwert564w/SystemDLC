@@ -160,29 +160,29 @@ public class Aura extends Module {
     public void applyMode(FovMode mode) {
         switch (mode) {
             case SNAP:
-                fov.setValue(360.0); turnSpeed.setValue(90.0); rotationRandomness.setValue(0.5); minCps.setValue(12.0); maxCps.setValue(15.0);
-                smoothRotation.setFlag(false); lagCompensation.setFlag(false); attackPauses.setFlag(false);
-                missChanceDynamic.setFlag(false); adaptiveCps.setFlag(false); microAdjustments.setFlag(false);
+                fov.setDouble(360.0); turnSpeed.setDouble(90.0); rotationRandomness.setDouble(0.5); minCps.setDouble(12.0); maxCps.setDouble(15.0);
+                smoothRotation.setBoolean(false); lagCompensation.setBoolean(false); attackPauses.setBoolean(false);
+                missChanceDynamic.setBoolean(false); adaptiveCps.setBoolean(false); microAdjustments.setBoolean(false);
                 break;
             case HVH:
-                fov.setValue(180.0); turnSpeed.setValue(45.0); rotationRandomness.setValue(1.5); minCps.setValue(11.0); maxCps.setValue(14.0);
-                smoothRotation.setFlag(true); lagCompensation.setFlag(false); attackPauses.setFlag(false);
-                missChanceDynamic.setFlag(false); adaptiveCps.setFlag(false); microAdjustments.setFlag(true);
+                fov.setDouble(180.0); turnSpeed.setDouble(45.0); rotationRandomness.setDouble(1.5); minCps.setDouble(11.0); maxCps.setDouble(14.0);
+                smoothRotation.setBoolean(true); lagCompensation.setBoolean(false); attackPauses.setBoolean(false);
+                missChanceDynamic.setBoolean(false); adaptiveCps.setBoolean(false); microAdjustments.setBoolean(true);
                 break;
             case POLAR:
-                fov.setValue(180.0); turnSpeed.setValue(22.0); rotationRandomness.setValue(2.8); minCps.setValue(8.0); maxCps.setValue(10.0);
-                smoothRotation.setFlag(true); lagCompensation.setFlag(true); attackPauses.setFlag(true);
-                missChanceDynamic.setFlag(true); adaptiveCps.setFlag(true); microAdjustments.setFlag(true);
+                fov.setDouble(180.0); turnSpeed.setDouble(22.0); rotationRandomness.setDouble(2.8); minCps.setDouble(8.0); maxCps.setDouble(10.0);
+                smoothRotation.setBoolean(true); lagCompensation.setBoolean(true); attackPauses.setBoolean(true);
+                missChanceDynamic.setBoolean(true); adaptiveCps.setBoolean(true); microAdjustments.setBoolean(true);
                 break;
             case MATRIX:
-                fov.setValue(180.0); turnSpeed.setValue(30.0); rotationRandomness.setValue(2.0); minCps.setValue(9.0); maxCps.setValue(11.5);
-                smoothRotation.setFlag(true); lagCompensation.setFlag(true); attackPauses.setFlag(true);
-                missChanceDynamic.setFlag(true); adaptiveCps.setFlag(true); microAdjustments.setFlag(true);
+                fov.setDouble(180.0); turnSpeed.setDouble(30.0); rotationRandomness.setDouble(2.0); minCps.setDouble(9.0); maxCps.setDouble(11.5);
+                smoothRotation.setBoolean(true); lagCompensation.setBoolean(true); attackPauses.setBoolean(true);
+                missChanceDynamic.setBoolean(true); adaptiveCps.setBoolean(true); microAdjustments.setBoolean(true);
                 break;
             case GRIM:
-                fov.setValue(150.0); turnSpeed.setValue(18.0); rotationRandomness.setValue(3.5); minCps.setValue(7.5); maxCps.setValue(9.5);
-                smoothRotation.setFlag(true); lagCompensation.setFlag(true); attackPauses.setFlag(true);
-                missChanceDynamic.setFlag(true); adaptiveCps.setFlag(true); microAdjustments.setFlag(true);
+                fov.setDouble(150.0); turnSpeed.setDouble(18.0); rotationRandomness.setDouble(3.5); minCps.setDouble(7.5); maxCps.setDouble(9.5);
+                smoothRotation.setBoolean(true); lagCompensation.setBoolean(true); attackPauses.setBoolean(true);
+                missChanceDynamic.setBoolean(true); adaptiveCps.setBoolean(true); microAdjustments.setBoolean(true);
                 break;
         }
         resetState();
@@ -227,7 +227,7 @@ public class Aura extends Module {
     private boolean shouldBlockAttack() {
         if (noAttackWhileEating.isFlag() && Feature.mc.player.isUsingItem()) {
             ItemStack item = Feature.mc.player.getActiveItem();
-            if (!item.isEmpty() && item.getItem().getFoodComponent() != null) return true;
+            if (!item.isEmpty() && item.isFood()) return true;
         }
         if (noAttackInGUI.isFlag() && Feature.mc.currentScreen != null) return true;
         if (noAttackInLiquid.isFlag() && (Feature.mc.player.isTouchingWater() || Feature.mc.player.isInLava())) return true;
@@ -318,7 +318,7 @@ public class Aura extends Module {
         Vec3d aimPoint = getAimPoint(target);
         Vec3d playerPos = Feature.mc.player.getPos();
         double deltaX = aimPoint.x - playerPos.x;
-        double deltaY = aimPoint.y - (playerPos.y + Feature.mc.player.getEyeHeight(Feature.mc.player.getPitch()));
+        double deltaY = aimPoint.y - (playerPos.y + Feature.mc.player.getEyeHeight(net.minecraft.entity.EntityPose.STANDING));
         double deltaZ = aimPoint.z - playerPos.z;
         double distance = Math.sqrt(deltaX * deltaX + deltaZ * deltaZ);
         float targetYaw = (float)(Math.atan2(deltaZ, deltaX) * 180.0 / Math.PI) - 90.0f;
