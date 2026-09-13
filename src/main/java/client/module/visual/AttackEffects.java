@@ -127,7 +127,7 @@ public class AttackEffects extends Module {
       RenderSystem.blendFunc(SrcFactor.SRC_ALPHA, DstFactor.ONE);
       RenderSystem.depthMask(false);
       RenderSystem.disableCull();
-      RenderSystem.setShader(GameRenderer.getPositionColorProgram());
+      // RenderSystem.setShader(GameRenderer.getPositionColorProgram()); // bypass for 1.21.4
 
       try {
          for (AttackEffectEntry entry : this.list2) {
