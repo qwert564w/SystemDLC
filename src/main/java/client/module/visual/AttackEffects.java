@@ -127,7 +127,7 @@ public class AttackEffects extends Module {
       RenderSystem.blendFunc(SrcFactor.SRC_ALPHA, DstFactor.ONE);
       RenderSystem.depthMask(false);
       RenderSystem.disableCull();
-      RenderSystem.setShader(GameRenderer::getPositionColorProgram);
+      RenderSystem.setShader(GameRenderer.getPositionColorProgram());
 
       try {
          for (AttackEffectEntry entry : this.list2) {
@@ -135,7 +135,7 @@ public class AttackEffects extends Module {
             float alpha = (1.0F - progress) * Math.min(1.0F, entry.getBrightness());
             if (alpha <= 0.01F) continue;
             
-            Random rnd = new Random(entry.getSeed());
+            Random rnd = new Random((long) entry.getSeed());
             int baseColor = entry.getColor();
             int r = (baseColor >> 16) & 0xFF;
             int g = (baseColor >> 8) & 0xFF;
