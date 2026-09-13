@@ -93,6 +93,12 @@ public class TargetHudElement extends RenderElement {
    private float smoothDamageHp;
    private float prevHp;
 
+   
+   private static float lerpHp(float d, float a, float b) {
+       float clamped = Math.max(0.0F, Math.min(1.0F, d));
+       return a + (b - a) * clamped;
+   }
+
    public TargetHudElement() {
       BooleanSetting booleansetting = new BooleanSetting("", "", true);
       booleansetting.setName("Показывать броню");
@@ -262,8 +268,8 @@ public class TargetHudElement extends RenderElement {
       float maxHp = playerEntity.getMaxHealth();
       
       // Плавная интерполяция для анимации урона (красный след)
-      this.smoothHp = MathUtil.lerp(0.1F, this.smoothHp, realHp);
-      this.smoothDamageHp = MathUtil.lerp(0.02F, this.smoothDamageHp, realHp);
+      this.smoothHp = lerpHp(0.1F, this.smoothHp, realHp);
+      this.smoothDamageHp = lerpHp(0.02F, this.smoothDamageHp, realHp);
       
       float f1 = maxHp > 0 ? (this.smoothHp / maxHp) : 0.0F;
       float f2 = maxHp > 0 ? (this.smoothDamageHp / maxHp) : 0.0F;

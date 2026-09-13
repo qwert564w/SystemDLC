@@ -6,7 +6,8 @@
   "client": [
     "HudProfileMixin",
     "SessionProfileMixin",
-    "ClientTickMixin"
+    "ClientTickMixin",
+    "recovered.fabric.mixin.gui.TitleScreenMixin"
   ],
   "injectors": {
     "defaultRequire": 1
