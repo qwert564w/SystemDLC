@@ -15,6 +15,10 @@ import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class Aura extends Module {
+    @Override
+    public void onEnable() {}
+    @Override
+    public void onDisable() {}
 
     public enum FovMode { SNAP, HVH, POLAR, MATRIX, GRIM }
     public enum AimTarget { HEAD, CHEST, LEGS, RANDOM, OFFSET }
@@ -227,7 +231,7 @@ public class Aura extends Module {
     private boolean shouldBlockAttack() {
         if (noAttackWhileEating.isFlag() && Feature.mc.player.isUsingItem()) {
             ItemStack item = Feature.mc.player.getActiveItem();
-            if (!item.isEmpty() && item.isFood()) return true;
+            if (!item.isEmpty() && item.getItem().getFoodComponent() != null) return true;
         }
         if (noAttackInGUI.isFlag() && Feature.mc.currentScreen != null) return true;
         if (noAttackInLiquid.isFlag() && (Feature.mc.player.isTouchingWater() || Feature.mc.player.isInLava())) return true;
