@@ -25,7 +25,7 @@ public abstract class TitleScreenMixin extends Screen {
         int height = this.height;
         
         // Растягиваем текстуру на весь экран (чтобы не было швов и стандартного dirt/panorama)
-        context.drawTexture(bgTexture, 0, 0, 0, 0, width, height, width, height);
+        // context.drawTexture(bgTexture, 0, 0, 0, 0, width, height, width, height);
         
         // Отменяем стандартный фон Minecraft (Panorama / Dirt)
         ci.cancel();
