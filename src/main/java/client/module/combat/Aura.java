@@ -8,7 +8,6 @@ import client.setting.ListSetting;
 import client.setting.SliderSetting;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.FoodItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
@@ -228,7 +227,7 @@ public class Aura extends Module {
     private boolean shouldBlockAttack() {
         if (noAttackWhileEating.isFlag() && Feature.mc.player.isUsingItem()) {
             ItemStack item = Feature.mc.player.getActiveItem();
-            if (!item.isEmpty() && item.getItem() instanceof FoodItem) return true;
+            if (!item.isEmpty() && item.getItem().getFoodComponent() != null) return true;
         }
         if (noAttackInGUI.isFlag() && Feature.mc.currentScreen != null) return true;
         if (noAttackInLiquid.isFlag() && (Feature.mc.player.isTouchingWater() || Feature.mc.player.isInLava())) return true;
