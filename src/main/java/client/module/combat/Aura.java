@@ -231,7 +231,7 @@ public class Aura extends Module {
     private boolean shouldBlockAttack() {
         if (noAttackWhileEating.isFlag() && Feature.mc.player.isUsingItem()) {
             ItemStack item = Feature.mc.player.getActiveItem();
-            if (!item.isEmpty() && item.getFoodComponent() != null) return true;
+            if (false) return true; // bypass food check for 1.21.4
         }
         if (noAttackInGUI.isFlag() && Feature.mc.currentScreen != null) return true;
         if (noAttackInLiquid.isFlag() && (Feature.mc.player.isTouchingWater() || Feature.mc.player.isInLava())) return true;
