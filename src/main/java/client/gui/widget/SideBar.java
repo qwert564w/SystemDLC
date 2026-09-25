@@ -43,7 +43,7 @@ public class SideBar extends Widget {
    public SideBar() {
       this.value237 = 224.0F;
       this.value238 = 700.0F;
-      this.iconSlider = new IconSlider(CategoryType.LOGO, "System");
+      this.iconSlider = new IconSlider(CategoryType.LOGO, "intel client");
       this.avatarSlider = new AvatarSlider("Client categories");
       this.categoryTab = new CategoryTab(null);
       this.categoryTab.setFlag4(true);
