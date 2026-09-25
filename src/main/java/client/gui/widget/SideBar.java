@@ -60,7 +60,7 @@ public class SideBar extends Widget {
       this.iconTab = new IconTab(CategoryType.CLOUDS, "Сонфигз", this::update6);
       this.iconTab2 = new IconTab(CategoryType.FRIENDS, "Фриендз", this::update9);
       this.iconTab3 = new IconTab(CategoryType.WAYPOINT, "Шайпоинтз", this::update3);
-      this.accountTab = new IconTab(CategoryType.GLOBE, "Аккаунты", this::update13);
+      this.accountTab = new IconTab(CategoryType.GLOBE, "Аккаунты", this::updateAccountsTab);
       this.list2.add(this.iconTab);
       this.list2.add(this.iconTab2);
       this.list2.add(this.iconTab3);
