@@ -40,6 +40,8 @@ jobs:
 
       - name: Verify JAR
         run: |
+          echo "Artifacts:"
+          find build/libs -maxdepth 1 -type f -printf "%f %s bytes\n"
           test -f build/libs/intel-client-1.0.2.jar
           unzip -t build/libs/intel-client-1.0.2.jar >/dev/null
           echo "JAR verified: $(du -h build/libs/intel-client-1.0.2.jar | cut -f1)"
