@@ -1,8 +1,8 @@
 {
   "schemaVersion": 1,
   "id": "systemdlcrecovered",
-  "version": "1.0.0",
-  "name": "SystemDLC Recovered",
+  "version": "1.0.2",
+  "name": "intel client",
   "environment": "client",
   "entrypoints": {
     "preLaunch": [
