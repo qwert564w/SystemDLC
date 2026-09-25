@@ -2,7 +2,6 @@
 
 uniform sampler2D MainSampler;
 uniform sampler2D MainDepthSampler;
-
 uniform mat4 MvInverse;
 uniform mat4 ProjInverse;
 uniform mat4 PrevModelView;
@@ -15,7 +14,6 @@ uniform int Centered;
 uniform int UseDepth;
 
 in vec2 texCoord;
-
 out vec4 fragColor;
 
 vec3 reproject(vec3 screenPos) {
@@ -42,25 +40,30 @@ void main() {
 
     float depth = 1.0;
     if (UseDepth == 1) {
-        for (int x = -1; x <= 1; x++) {
-            for (int y = -1; y <= 1; y++) {
-                depth = min(depth, texelFetch(MainDepthSampler, clamp(texel + ivec2(x, y), ivec2(0), maxTexel), 0).x);
+        for (int x = 0; x < 2; x++) {
+            for (int y = 0; y < 2; y++) {
+                depth = min(depth, texelFetch(
+                    MainDepthSampler,
+                    clamp(texel + ivec2(x, y), ivec2(0), maxTexel),
+                    0
+                ).x);
             }
         }
     }
 
     vec2 velocity = clampLength(texCoord - reproject(vec3(texCoord, depth)).xy) * Strength;
-
-    int count = clamp(int(ceil(length(velocity * res))), 1, Samples);
+    int requested = max(Samples, 1);
+    int count = clamp(int(ceil(length(velocity * res))), 1, min(requested, 8));
     vec2 stepUv = velocity / float(count);
     float centerOffset = Centered == 1 ? -(float(count) * 0.5) : 0.0;
 
     vec3 sum = vec3(0.0);
-    for (int i = 0; i < count; i++) {
+    for (int i = 0; i < 8; i++) {
+        if (i >= count) break;
         float fi = float(i);
         float jitter = noise(gl_FragCoord.xy + vec2(fi, fi * 1.4));
-        vec3 c = texture(MainSampler, texCoord + (fi + centerOffset + jitter) * stepUv).rgb;
-        sum += c * c;
+        vec3 sampleColor = texture(MainSampler, texCoord + (fi + centerOffset + jitter) * stepUv).rgb;
+        sum += sampleColor * sampleColor;
     }
 
     fragColor = vec4(sqrt(sum / float(count)), 1.0);
