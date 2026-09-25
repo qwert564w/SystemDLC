@@ -21,8 +21,8 @@ public class ToggleButton extends LabelWidget {
       this.value239 = flag ? 1.0F : 0.0F;
       this.value240 = this.value239;
       this.time = System.nanoTime();
-      this.value237 = 28.0F;
-      this.value238 = 16.0F;
+      this.value237 = 34.0F;
+      this.value238 = 20.0F;
    }
 
    private void setBoolean(boolean flag) {
