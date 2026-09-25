@@ -275,7 +275,7 @@ public class SideBar extends Widget {
       }
    }
 
-   private void update13() {
+   public void updateAccountsTab() {
       if (!this.accountTab.isFlag4()) {
          this.update10();
          this.accountTab.setFlag4(true);
