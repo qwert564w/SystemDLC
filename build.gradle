@@ -3,11 +3,11 @@ plugins {
     id 'java'
 }
 
-version = '1.0.1'
+version = '1.0.2'
 group = 'recovered'
 
 base {
-    archivesName = 'systemdlc-recovered'
+    archivesName = 'intel-client'
 }
 
 java {
@@ -72,7 +72,7 @@ def optimizeTextures = tasks.register('optimizeTextures') {
 
 tasks.named('jar') {
     dependsOn optimizeTextures
-    archiveFileName = 'SystemDLC-1.0.1.jar'
+    archiveFileName = 'intel-client-1.0.2.jar'
 }
 
 tasks.named('remapJar') {
