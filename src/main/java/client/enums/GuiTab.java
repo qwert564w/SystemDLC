@@ -5,12 +5,13 @@ public enum GuiTab {
    CONFIGS,
    FRIENDS,
    FAVORITES,
-   WAYPOINTS;
+   WAYPOINTS,
+   ACCOUNTS;
 
    private static final GuiTab[] guiTabArray = getGuiTabArray();
 
    private static GuiTab[] getGuiTabArray() {
-      return new GuiTab[]{MODULES, CONFIGS, FRIENDS, FAVORITES, WAYPOINTS};
+      return new GuiTab[]{MODULES, CONFIGS, FRIENDS, FAVORITES, WAYPOINTS, ACCOUNTS};
    }
 
    public static GuiTab getGuiTabByString(String text) {
