@@ -19,6 +19,7 @@ public class WindowUtil {
    public static void setWindow(Window window) {
       long i = window.getHandle();
       if (i != 0L) {
+         GLFW.glfwSetWindowTitle(i, "intel client");
          if (!window.isFullscreen()) {
             if (flag) {
                flag = false;
