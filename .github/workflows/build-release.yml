@@ -38,6 +38,21 @@ jobs:
           path: build.log
           if-no-files-found: warn
 
+      - name: Inspect JAR
+        if: always()
+        run: |
+          find build/libs -maxdepth 1 -type f -printf "%f %s bytes\n" | tee jar-list.txt
+          if test -f build/libs/intel-client-1.0.2.jar; then jar tf build/libs/intel-client-1.0.2.jar > jar-contents.txt; fi
+      - name: Upload JAR inspection
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: intel-client-jar-inspection
+          path: |
+            jar-list.txt
+            jar-contents.txt
+          if-no-files-found: warn
+
       - name: Verify JAR
         run: |
           echo "Artifacts:"
