@@ -29,6 +29,7 @@ public class SideBar extends Widget {
    private final IconTab iconTab;
    private final IconTab iconTab2;
    private final IconTab iconTab3;
+   private final IconTab accountTab;
    private final IconTab iconTab4;
    private final ServerLabel serverLabel;
    private final QuickMenu quickMenu = new QuickMenu();
@@ -39,6 +40,7 @@ public class SideBar extends Widget {
    private Runnable runnable2;
    private Runnable runnable3;
    private Runnable runnable4;
+   private Runnable runnable5;
 
    public SideBar() {
       this.value237 = 224.0F;
@@ -58,9 +60,11 @@ public class SideBar extends Widget {
       this.iconTab = new IconTab(CategoryType.CLOUDS, "Сонфигз", this::update6);
       this.iconTab2 = new IconTab(CategoryType.FRIENDS, "Фриендз", this::update9);
       this.iconTab3 = new IconTab(CategoryType.WAYPOINT, "Шайпоинтз", this::update3);
+      this.accountTab = new IconTab(CategoryType.GLOBE, "Аккаунты", this::update13);
       this.list2.add(this.iconTab);
       this.list2.add(this.iconTab2);
       this.list2.add(this.iconTab3);
+      this.list2.add(this.accountTab);
       this.iconTab4 = new IconTab(CategoryType.SETTINGS, "Зеттингз", this::update11);
       this.list3.add(this.iconTab4);
       this.list3.add(new IconTab(CategoryType.SEARCH, "Зеарсх", this::update8));
@@ -69,6 +73,10 @@ public class SideBar extends Widget {
 
    public void setRunnable4(Runnable runnable) {
       this.runnable4 = runnable;
+   }
+
+   public void setRunnable5(Runnable runnable) {
+      this.runnable5 = runnable;
    }
 
    private void update3() {
@@ -267,6 +275,16 @@ public class SideBar extends Widget {
       }
    }
 
+   private void update13() {
+      if (!this.accountTab.isFlag4()) {
+         this.update10();
+         this.accountTab.setFlag4(true);
+         if (this.runnable5 != null) {
+            this.runnable5.run();
+         }
+      }
+   }
+
    private void update9() {
       if (!this.iconTab2.isFlag4()) {
          this.update10();
@@ -330,6 +348,7 @@ public class SideBar extends Widget {
       this.iconTab.setFlag4(false);
       this.iconTab2.setFlag4(false);
       this.iconTab3.setFlag4(false);
+      this.accountTab.setFlag4(false);
    }
 
    public void setFloat2(float value) {
