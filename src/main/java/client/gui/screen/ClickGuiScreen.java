@@ -162,8 +162,8 @@ public class ClickGuiScreen extends Screen implements Theme, UiMetrics {
                this.navBar.update6();
                break;
             case "ACCOUNTS":
+               this.sideBar.updateAccountsTab();
                this.navBar.updateAccounts();
-               this.sideBar.update10();
                break;
             case "FAVORITES":
                this.sideBar.onCategory(categoryx);
