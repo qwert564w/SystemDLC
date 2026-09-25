@@ -3,7 +3,7 @@ plugins {
     id 'java'
 }
 
-version = '1.0.0'
+version = '1.0.1'
 group = 'recovered'
 
 base {
@@ -16,8 +16,6 @@ java {
     }
     sourceCompatibility = JavaVersion.VERSION_21
     targetCompatibility = JavaVersion.VERSION_21
-    // Uncomment to attach sources jar on build:
-    // withSourcesJar()
 }
 
 repositories {
@@ -26,25 +24,57 @@ repositories {
 }
 
 dependencies {
-    // Matches fabric.mod.json: minecraft 1.21.4, java 21, fabricloader >=0.16.10
     minecraft 'com.mojang:minecraft:1.21.4'
     mappings 'net.fabricmc:yarn:1.21.4+build.8:v2'
     modImplementation 'net.fabricmc:fabric-loader:0.16.10'
-    // Needed so the mod's own assets (shaders, textures, sounds) are registered as a resource pack.
     modImplementation 'net.fabricmc.fabric-api:fabric-api:0.119.4+1.21.4'
 }
 
 tasks.withType(JavaCompile).configureEach {
     it.options.encoding = 'UTF-8'
     it.options.release = 21
-}
-
-tasks.withType(JavaCompile).configureEach {
     it.options.compilerArgs += ['-Xmaxerrs', '10000', '-Xdiags:verbose']
 }
 
-// The native library installs the game hooks via ClassRedefiner, so the client is
-// inert without it. Set systemdlc.native=false only to test the pure-Java path.
+def optimizeTextures = tasks.register('optimizeTextures') {
+    dependsOn tasks.named('processResources')
+    doLast {
+        def root = layout.buildDirectory.dir('resources/main/assets/systemdlc/images').get().asFile
+        if (!root.exists()) return
+        root.eachFileRecurse { file ->
+            if (!file.isFile() || !file.name.toLowerCase().endsWith('.png')) return
+            def image = javax.imageio.ImageIO.read(file)
+            if (image == null) return
+            def tmp = new File(file.parentFile, file.name + '.optimized')
+            def writer = javax.imageio.ImageIO.getImageWritersByFormatName('png')
+            if (!writer.hasNext()) return
+            def pngWriter = writer.next()
+            try {
+                def params = pngWriter.getDefaultWriteParam()
+                if (params.canWriteCompressed()) {
+                    params.setCompressionMode(javax.imageio.ImageWriteParam.MODE_EXPLICIT)
+                    params.setCompressionQuality(0.8f)
+                }
+                pngWriter.setOutput(javax.imageio.ImageIO.createImageOutputStream(tmp))
+                pngWriter.write(null, new javax.imageio.IIOImage(image, null, null), params)
+            } finally {
+                pngWriter.dispose()
+            }
+            if (tmp.length() < file.length()) {
+                file.delete()
+                tmp.renameTo(file)
+            } else {
+                tmp.delete()
+            }
+        }
+    }
+}
+
+tasks.named('jar') {
+    dependsOn optimizeTextures
+    archiveFileName = 'SystemDLC-1.0.1.jar'
+}
+
 tasks.named('runClient') {
     jvmArgs '-Dsystemdlc.native=true', '--enable-native-access=ALL-UNNAMED',
             '--add-opens', 'jdk.attach/com.sun.tools.attach=ALL-UNNAMED'
