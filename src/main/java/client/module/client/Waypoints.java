@@ -11,6 +11,7 @@ import client.module.player.SafeLeave;
 import client.network.PacketEvent;
 import client.render.WorldRenderContext;
 import client.setting.BooleanSetting;
+import client.setting.ColorSetting;
 import client.setting.Setting;
 import client.setting.SliderSetting;
 import client.util.EventChatParser;
@@ -38,6 +39,8 @@ public class Waypoints extends Module {
    private BooleanSetting togglSkryvaetVMire;
    private BooleanSetting togglSkryvaetVHude;
    private BooleanSetting metkiEventov;
+   private ColorSetting colorMetok;
+   private BooleanSetting throughWalls;
    private final WaypointMath waypointMath;
    private final List<String> list;
    private long time;
@@ -77,6 +80,14 @@ public class Waypoints extends Module {
       booleansetting.setName("Метки эвентов");
       booleansetting.setDescription("После захода на анку запросить /events delay и отметить активные эвенты");
       this.metkiEventov = booleansetting;
+      ColorSetting colorsetting = new ColorSetting("", "", -16711681, true);
+      colorsetting.setName("Цвет меток");
+      colorsetting.setDescription("Цвет плашек и текста в мире");
+      this.colorMetok = colorsetting;
+      booleansetting = new BooleanSetting("", "", true);
+      booleansetting.setName("Видеть через стены");
+      booleansetting.setDescription("Рисовать метки поверх геометрии мира");
+      this.throughWalls = booleansetting;
       this.waypointMath = new WaypointMath();
       this.list = new CopyOnWriteArrayList<>();
       this.time = 0L;
@@ -87,7 +98,7 @@ public class Waypoints extends Module {
       this.weakReference = new WeakReference<>(null);
       this.addSettings(
          new Setting[]{
-            this.renderVMire, this.renderVHude, this.maxRange, this.sizePlashki, this.togglSkryvaetVMire, this.togglSkryvaetVHude, this.metkiEventov
+            this.renderVMire, this.renderVHude, this.maxRange, this.sizePlashki, this.togglSkryvaetVMire, this.togglSkryvaetVHude, this.metkiEventov, this.colorMetok, this.throughWalls
          }
       );
       this.setEnabledSilent(true);
@@ -185,7 +196,7 @@ public class Waypoints extends Module {
                         try {
                            WaypointMath waypointmath = this.waypointMath;
                            float f = this.getFloat();
-                           waypointmath.render(worldRenderContext, f, arraylist);
+                           waypointmath.render(worldRenderContext, f, arraylist, this.colorMetok.getInt3(), this.throughWalls.isFlag3());
                         } catch (Exception exception) {
                         }
                      }
