@@ -77,7 +77,7 @@ tasks.named('jar') {
 
 tasks.named('remapJar') {
     dependsOn optimizeTextures
-    archiveFileName = 'SystemDLC-1.0.1.jar'
+    archiveFileName = 'intel-client-1.0.2.jar'
 }
 
 tasks.named('runClient') {
