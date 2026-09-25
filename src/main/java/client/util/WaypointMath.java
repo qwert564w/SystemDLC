@@ -10,23 +10,31 @@ import client.render.SvgShader;
 import client.render.TextShader;
 import client.render.WorldRenderContext;
 import java.util.List;
+import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.render.Camera;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.math.Vec3d;
 import org.joml.Matrix4f;
+import org.lwjgl.opengl.GL11;
 
 public class WaypointMath {
-   public void render(WorldRenderContext worldRenderContext, float value, List<Waypoint> list) {
+   public void render(WorldRenderContext worldRenderContext, float value, List<Waypoint> list, int color, boolean throughWalls) {
       if (list != null && !list.isEmpty()) {
          MatrixStack matrixstack = worldRenderContext.getMatrixStack();
          Camera camera = worldRenderContext.getCamera();
          Vec3d vec3d = camera.getPos();
          int i = Theme.background();
-         int j = Theme.foreground();
-         int k = Theme.mutedFg();
+         int j = color;
+         int k = color;
          RotationBuffer.setMinecraftClient2(Feature.mc);
+         boolean depthChanged = false;
 
          try {
+            if (throughWalls) {
+               GL11.glDepthFunc(GL11.GL_ALWAYS);
+               RenderSystem.depthMask(false);
+               depthChanged = true;
+            }
             for (Waypoint waypoint : list) {
                if (waypoint != null) {
                   double d0 = waypoint.getValue() + 0.5;
@@ -111,6 +119,11 @@ public class WaypointMath {
                }
             }
          } finally {
+            if (depthChanged) {
+               RenderSystem.depthMask(true);
+               GL11.glDepthFunc(GL11.GL_LEQUAL);
+               RenderSystem.enableDepthTest();
+            }
             RotationBuffer.setMinecraftClient(Feature.mc);
          }
       }
