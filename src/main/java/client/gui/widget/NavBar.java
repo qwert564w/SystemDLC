@@ -18,6 +18,7 @@ public class NavBar extends Widget {
    private final ConfigsPage configsPage;
    private final FriendsPage friendsPage;
    private final WaypointsPage waypointsPage;
+   private final AccountsPage accountsPage;
    private final Tween tween4 = new Tween(1.0F, 0.18F).getTweenByFunction(Easings::getFloatByFloat4);
    private boolean flag4 = false;
    private Runnable runnable;
@@ -32,6 +33,7 @@ public class NavBar extends Widget {
       this.configsPage = new ConfigsPage();
       this.friendsPage = new FriendsPage();
       this.waypointsPage = new WaypointsPage();
+      this.accountsPage = new AccountsPage();
       this.topBar.setConsumer(this.contentArea::onBoolean);
    }
 
@@ -84,6 +86,13 @@ public class NavBar extends Widget {
       this.guiTab = GuiTab.FRIENDS;
       this.topBar.setString2("Friends");
       this.friendsPage.update4();
+      this.topBar.onBoolean(false);
+      this.update3();
+   }
+
+   public void updateAccounts() {
+      this.guiTab = GuiTab.ACCOUNTS;
+      this.topBar.setString2("Account Manager");
       this.topBar.onBoolean(false);
       this.update3();
    }
@@ -165,6 +174,9 @@ public class NavBar extends Widget {
             break;
          case WAYPOINTS:
             this.waypointsPage.update4();
+            break;
+         case ACCOUNTS:
+            break;
       }
    }
 
@@ -198,6 +210,9 @@ public class NavBar extends Widget {
       this.configsPage.onFloatFloat4(value2, value);
       this.friendsPage.onFloatFloat4(value2, value);
       this.waypointsPage.onFloatFloat4(value2, value);
+      this.accountsPage.onFloatFloat2(this.value235, this.value236);
+      this.accountsPage.setValue237(this.getFloat2());
+      this.accountsPage.setValue238(this.getFloat2());
    }
 
    @Override
@@ -307,6 +322,8 @@ public class NavBar extends Widget {
          object = this.friendsPage;
       } else if (this.guiTab == GuiTab.WAYPOINTS) {
          object = this.waypointsPage;
+      } else if (this.guiTab == GuiTab.ACCOUNTS) {
+         object = this.accountsPage;
       } else {
          object = this.contentArea;
       }
