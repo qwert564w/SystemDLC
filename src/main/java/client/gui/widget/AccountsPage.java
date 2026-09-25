@@ -78,7 +78,7 @@ public final class AccountsPage extends Widget {
         float rowY = y + 112.0F;
         for (int i = 0; i < profiles.size(); i++) {
             int color = i == selected ? foreground : muted;
-            TextShader.onFloatStringFloatFloatIntFloatMatrix4f(value, (i + 1) + ". " + profiles.get(i), 14.0F, x, rowY, color, rowY, matrix4f);
+            TextShader.onFloatStringFloatFloatIntFloatMatrix4f(value, (i + 1) + ". " + profiles.get(i), 14.0F, x, color, rowY, matrix4f);
             rowY += 32.0F;
         }
     }
