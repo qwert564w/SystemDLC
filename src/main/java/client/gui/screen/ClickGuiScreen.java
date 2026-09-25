@@ -161,6 +161,10 @@ public class ClickGuiScreen extends Screen implements Theme, UiMetrics {
                this.sideBar.update12();
                this.navBar.update6();
                break;
+            case "ACCOUNTS":
+               this.navBar.updateAccounts();
+               this.sideBar.update10();
+               break;
             case "FAVORITES":
                this.sideBar.onCategory(categoryx);
                this.navBar.setList2(ClientAccess.getList());
@@ -572,6 +576,7 @@ public class ClickGuiScreen extends Screen implements Theme, UiMetrics {
          this.sideBar.setRunnable2(this::update3);
          this.sideBar.setRunnable3(this::update4);
          this.sideBar.setRunnable4(this::update);
+         this.sideBar.setRunnable5(this.navBar::updateAccounts);
          this.sideBar.onRunnable(this::update6);
          this.searchBar.setConsumer(this::onCategory2);
          this.searchBar.setBiConsumer(this::onCategoryModule);
