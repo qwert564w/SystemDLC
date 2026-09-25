@@ -75,6 +75,11 @@ tasks.named('jar') {
     archiveFileName = 'SystemDLC-1.0.1.jar'
 }
 
+tasks.named('remapJar') {
+    dependsOn optimizeTextures
+    archiveFileName = 'SystemDLC-1.0.1.jar'
+}
+
 tasks.named('runClient') {
     jvmArgs '-Dsystemdlc.native=true', '--enable-native-access=ALL-UNNAMED',
             '--add-opens', 'jdk.attach/com.sun.tools.attach=ALL-UNNAMED'
