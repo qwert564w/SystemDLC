@@ -1,0 +1,48 @@
+name: Build SystemDLC
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Java 21
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+          cache: gradle
+
+      - name: Build full JAR
+        run: |
+          chmod +x gradlew
+          ./gradlew --no-daemon clean build
+
+      - name: Verify JAR
+        run: |
+          test -f build/libs/SystemDLC-1.0.1.jar
+          unzip -t build/libs/SystemDLC-1.0.1.jar >/dev/null
+          echo "JAR verified: $(du -h build/libs/SystemDLC-1.0.1.jar | cut -f1)"
+
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: SystemDLC-1.0.1
+          path: build/libs/SystemDLC-1.0.1.jar
+          if-no-files-found: error
+
+      - name: Create release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release delete v1.0.1 --yes --cleanup-tag || true
+          gh release create v1.0.1 build/libs/SystemDLC-1.0.1.jar             --target "${{ github.sha }}"             --title "SystemDLC 1.0.1"             --notes "Optimized full-project build with updated rotation logic, shader performance reductions, and resource texture recompression."
