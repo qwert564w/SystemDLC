@@ -4,6 +4,7 @@ import java.util.List;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
 import net.minecraft.client.render.RenderLayer;
+import net.minecraft.client.render.RenderLayers;
 import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.render.command.OrderedRenderCommandQueue;
 import net.minecraft.client.render.entity.feature.FeatureRenderer;
@@ -37,7 +38,7 @@ public class CosmeticFeatureRenderer extends FeatureRenderer<PlayerEntityRenderS
             CosmeticModel cosmetic = LocalCosmetics.modelFor(idx);
             if (cosmetic == null || cosmetic.getTextureId() == null) continue;
             Identifier tex = cosmetic.getTextureId();
-            RenderLayer layer = RenderLayer.getEntityTranslucent(tex);
+            RenderLayer layer = RenderLayers.entityCutoutNoCull(tex);
             try {
                 commandQueue.submitCustom(matrices, layer, (entry, vertexConsumer) -> {
                     MatrixStack local = new MatrixStack();

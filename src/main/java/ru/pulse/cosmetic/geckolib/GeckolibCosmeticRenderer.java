@@ -10,7 +10,9 @@ import java.util.Map.Entry;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import net.minecraft.client.render.RenderLayer;
+import net.minecraft.client.render.RenderLayers;
 import net.minecraft.client.render.RenderLayer;
+import net.minecraft.client.render.RenderLayers;
 import net.minecraft.util.Identifier;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.client.render.VertexConsumer;
@@ -55,7 +57,7 @@ public class GeckolibCosmeticRenderer {
             }
 
             Identifier var7 = var1.getTextureId();
-            RenderLayer var8 = RenderLayer.getEntityTranslucent(var7);
+            RenderLayer var8 = RenderLayers.entityCutoutNoCull(var7);
             VertexConsumer var9 = var3.getBuffer(var8);
             RenderSystemHelper.disableCull();
 
