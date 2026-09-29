@@ -15,7 +15,7 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 
 /**
- * Intel client Aura for Fabric 1.21.4.
+ * Intel client Aura for Fabric 1.21.11.
  *
  * Uses the normal client interaction manager and vanilla attack cooldown.
  * No packet spoofing, hitbox spoofing, or anti-cheat bypass behavior.
