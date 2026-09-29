@@ -12,6 +12,7 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.Vec3d;
 
 /**
  * Intel client Aura for Fabric 1.21.4.
@@ -155,9 +156,10 @@ public final class KillAura extends Module {
 
    private void rotateTo(LivingEntity entity) {
       Vec3Target point = this.aimPoint(entity);
-      double dx = point.x - this.player().getEyeX();
-      double dy = point.y - this.player().getEyeY();
-      double dz = point.z - this.player().getEyeZ();
+      Vec3d eye = this.player().getEyePos();
+      double dx = point.x - eye.x;
+      double dy = point.y - eye.y;
+      double dz = point.z - eye.z;
       double horizontal = Math.sqrt(dx * dx + dz * dz);
 
       float desiredYaw = (float)(Math.toDegrees(Math.atan2(dz, dx)) - 90.0);
