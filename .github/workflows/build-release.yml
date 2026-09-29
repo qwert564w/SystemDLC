@@ -42,7 +42,8 @@ jobs:
         if: always()
         run: |
           find build/libs -maxdepth 1 -type f -printf "%f %s bytes\n" | tee jar-list.txt
-          if test -f build/libs/intel-client-1.0.3.jar; then jar tf build/libs/intel-client-1.0.3.jar > jar-contents.txt; fi
+          if test -f build/libs/intel-client-1.0.4.jar; then jar tf build/libs/intel-client-1.0.4.jar > jar-contents.txt; fi
+
       - name: Upload JAR inspection
         if: always()
         uses: actions/upload-artifact@v4
@@ -57,32 +58,34 @@ jobs:
         run: |
           echo "Artifacts:"
           find build/libs -maxdepth 1 -type f -printf "%f %s bytes\n"
-          test -f build/libs/intel-client-1.0.3.jar
-          unzip -t build/libs/intel-client-1.0.3.jar >/dev/null
-          echo "JAR verified: $(du -h build/libs/intel-client-1.0.3.jar | cut -f1)"
-          jar tf build/libs/intel-client-1.0.3.jar | grep -q 'fabric.mod.json'
-          jar tf build/libs/intel-client-1.0.3.jar | grep -q 'assets/systemdlc/shaders/core/motion_blur.fsh'
-          jar tf build/libs/intel-client-1.0.3.jar | grep -q 'assets/systemdlc/images/a.png'
+          test -f build/libs/intel-client-1.0.4.jar
+          unzip -t build/libs/intel-client-1.0.4.jar >/dev/null
+          jar tf build/libs/intel-client-1.0.4.jar | grep -q 'fabric.mod.json'
+          jar tf build/libs/intel-client-1.0.4.jar | grep -q 'assets/systemdlc/shaders/core/motion_blur.fsh'
+          jar tf build/libs/intel-client-1.0.4.jar | grep -q 'assets/systemdlc/images/a.png'
+          echo "JAR verified: $(du -h build/libs/intel-client-1.0.4.jar | cut -f1)"
 
       - name: Upload build artifact
         uses: actions/upload-artifact@v4
         with:
-          name: intel-client-1.0.3
-          path: build/libs/intel-client-1.0.3.jar
+          name: intel-client-1.0.4
+          path: build/libs/intel-client-1.0.4.jar
           if-no-files-found: error
 
       - name: Create release
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          gh release delete v1.0.3-intel-client --yes --cleanup-tag || true
-          gh release create v1.0.3-intel-client build/libs/intel-client-1.0.3.jar             --target "${{ github.sha }}"             --title "intel client 1.0.3"             --notes "Optimized full-project build with updated rotation logic, shader performance reductions, and resource texture recompression."
-
+          gh release delete v1.0.4-intel-client --yes --cleanup-tag || true
+          gh release create v1.0.4-intel-client build/libs/intel-client-1.0.4.jar \
+            --target "${{ github.sha }}" \
+            --title "intel client 1.0.4" \
+            --notes "Aim stability fixes, Aura improvements, GUI polish, and optimized rendering resources."
 
       - name: Verify release
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          gh release view v1.0.3-intel-client
-          gh release download v1.0.3-intel-client --pattern 'intel-client-1.0.3.jar' --dir /tmp/release-check
-          test -s /tmp/release-check/intel-client-1.0.3.jar
+          gh release view v1.0.4-intel-client
+          gh release download v1.0.4-intel-client --pattern 'intel-client-1.0.4.jar' --dir /tmp/release-check
+          test -s /tmp/release-check/intel-client-1.0.4.jar
