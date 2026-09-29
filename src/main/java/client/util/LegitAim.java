@@ -196,8 +196,8 @@ public class LegitAim extends AimMode {
       double max = Math.max(this.minLerp.getValue(), this.maxLerp.getValue());
 
       double lerp = MathHelper.clamp(targetLerp * average * angleFactor, min, max);
-      double yaw = value * lerp;
-      double pitch = 0.0;
+      double yaw = MathHelper.clamp(value * lerp, -18.0, 18.0);
+      double pitch = MathHelper.clamp(value4 * lerp * 0.65, -12.0, 12.0);
 
       double sharedNoise = RandomUtil.getDouble();
       yaw = RandomUtil.getDoubleByDoubleDouble(sharedNoise, yaw);
