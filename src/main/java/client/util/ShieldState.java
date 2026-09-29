@@ -23,7 +23,7 @@ public class ShieldState {
    public void update2() {
       if (Feature.mc.player != null) {
          if (this.value != -1 && this.value < 9) {
-            Feature.mc.player.getInventory().selectedSlot = this.value;
+            Feature.mc.player.getInventory().setSelectedSlot(this.value);
          }
 
          this.update();
@@ -33,7 +33,7 @@ public class ShieldState {
    public void onDouble(double value2) {
       if (this.flag && this.value != -1 && Feature.mc.player != null) {
          int i = CritChecks.getInt();
-         int j = Feature.mc.player.getInventory().selectedSlot;
+         int j = Feature.mc.player.getInventory().getSelectedSlot();
          if (j != i && j != this.value) {
             this.update();
          } else {
@@ -53,12 +53,12 @@ public class ShieldState {
    public void setLivingEntity(LivingEntity livingEntity2) {
       if (Feature.mc.player != null) {
          if (this.value == -1) {
-            this.value = Feature.mc.player.getInventory().selectedSlot;
+            this.value = Feature.mc.player.getInventory().getSelectedSlot();
          }
 
          int i = CritChecks.getInt();
          if (i != -1) {
-            Feature.mc.player.getInventory().selectedSlot = i;
+            Feature.mc.player.getInventory().setSelectedSlot(i);
             this.flag = true;
             this.time = System.currentTimeMillis();
             this.livingEntity = livingEntity2;

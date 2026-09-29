@@ -8,11 +8,11 @@ import client.module.visual.CustomFog;
 import client.module.visual.NoRender;
 import client.util.UnsafeAccess;
 import net.minecraft.block.enums.CameraSubmersionType;
-import net.minecraft.client.render.BackgroundRenderer;
+import net.minecraft.client.render.fog.FogRenderer;
 import net.minecraft.client.render.Camera;
 import net.minecraft.client.render.Fog;
 import net.minecraft.client.render.FogShape;
-import net.minecraft.client.render.BackgroundRenderer.FogType;
+import net.minecraft.client.render.fog.FogRenderer.FogType;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
@@ -20,7 +20,7 @@ import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.registry.entry.RegistryEntry;
 import org.joml.Vector4f;
 
-@HookClass(BackgroundRenderer.class)
+@HookClass(FogRenderer.class)
 public class FogHooks {
    private static final UnsafeAccess<NoRender> unsafeAccess = new UnsafeAccess<>(NoRender.class);
    private static final UnsafeAccess<CustomFog> unsafeAccess2 = new UnsafeAccess<>(CustomFog::getInstance);

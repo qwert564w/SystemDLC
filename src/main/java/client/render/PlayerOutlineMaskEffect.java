@@ -3,8 +3,8 @@ package client.render;
 import client.concurrent.ResourceManagerHooks;
 import client.module.render.PlayerESP;
 import client.setting.ColorSetting;
-import com.mojang.blaze3d.platform.GlStateManager.DstFactor;
-import com.mojang.blaze3d.platform.GlStateManager.SrcFactor;
+import com.mojang.blaze3d.opengl.GlStateManager.DstFactor;
+import com.mojang.blaze3d.opengl.GlStateManager.SrcFactor;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gl.Defines;
@@ -16,7 +16,7 @@ import net.minecraft.client.gl.SimpleFramebuffer;
 import net.minecraft.client.render.BufferBuilder;
 import net.minecraft.client.render.BufferRenderer;
 import net.minecraft.client.render.VertexFormats;
-import net.minecraft.client.render.VertexFormat.DrawMode;
+import com.mojang.blaze3d.vertex.VertexFormat.DrawMode;
 import net.minecraft.util.Identifier;
 
 public final class PlayerOutlineMaskEffect {

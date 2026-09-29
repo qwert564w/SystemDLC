@@ -26,7 +26,7 @@ import net.minecraft.client.render.entity.EntityRenderers;
 import net.minecraft.client.render.entity.PlayerEntityRenderer;
 import net.minecraft.client.render.entity.EntityRendererFactory.Context;
 import net.minecraft.client.render.entity.state.EntityRenderState;
-import net.minecraft.client.util.SkinTextures.Model;
+import net.minecraft.entity.player.PlayerSkinType;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.decoration.EndCrystalEntity;

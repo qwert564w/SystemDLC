@@ -90,7 +90,7 @@ public class AutoHealthPot extends Module {
          double d1 = this.value245 - f1;
          if (!(Math.sqrt(d0 * d0 + d1 * d1) >= 1.5)) {
             if (this.value246 >= 0) {
-               this.inventory().selectedSlot = this.value246;
+               this.inventory().setSelectedSlot(this.value246);
             }
 
             if (this.flag3 && !this.itemStack2.isEmpty()) {
@@ -126,7 +126,7 @@ public class AutoHealthPot extends Module {
                return;
             }
 
-            this.inventory().selectedSlot = this.value241;
+            this.inventory().setSelectedSlot(this.value241);
             this.setInt(0);
             break;
          case 2:
@@ -254,7 +254,7 @@ public class AutoHealthPot extends Module {
                return;
             }
 
-            this.inventory().selectedSlot = this.value235;
+            this.inventory().setSelectedSlot(this.value235);
             this.setInt(0);
             break;
          case 3:
@@ -304,7 +304,7 @@ public class AutoHealthPot extends Module {
             } else {
                this.value238 = playerentity.getPitch();
                this.value239 = playerentity.getYaw();
-               this.value240 = this.inventory().selectedSlot;
+               this.value240 = this.inventory().getSelectedSlot();
                this.itemStack = ItemStack.EMPTY;
             }
 

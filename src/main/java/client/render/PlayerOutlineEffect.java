@@ -2,9 +2,9 @@ package client.render;
 
 import client.concurrent.ResourceManagerHooks;
 import client.module.visual.HandGlow;
-import com.mojang.blaze3d.platform.GlStateManager.DstFactor;
-import com.mojang.blaze3d.platform.GlStateManager.SrcFactor;
-import com.mojang.blaze3d.platform.GlStateManager;
+import com.mojang.blaze3d.opengl.GlStateManager.DstFactor;
+import com.mojang.blaze3d.opengl.GlStateManager.SrcFactor;
+import com.mojang.blaze3d.opengl.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gl.Defines;
@@ -18,7 +18,7 @@ import net.minecraft.client.render.BufferRenderer;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.VertexConsumerProvider.Immediate;
 import net.minecraft.client.render.VertexFormats;
-import net.minecraft.client.render.VertexFormat.DrawMode;
+import com.mojang.blaze3d.vertex.VertexFormat.DrawMode;
 import net.minecraft.util.Identifier;
 import org.lwjgl.opengl.GL11;
 

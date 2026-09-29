@@ -18,7 +18,7 @@ public class MaceSwap extends Module {
 
    private void onInt(int count) {
       if (!this.notInGame()) {
-         this.inventory().selectedSlot = count;
+         this.inventory().setSelectedSlot(count);
       }
    }
 
@@ -70,7 +70,7 @@ public class MaceSwap extends Module {
 
    private void setInt(int count) {
       if (!this.notInGame()) {
-         this.value235 = this.inventory().selectedSlot;
+         this.value235 = this.inventory().getSelectedSlot();
          this.flag = true;
          this.value236 = 0;
          this.onInt(count);

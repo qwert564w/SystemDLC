@@ -757,7 +757,7 @@ public class AutoSwap extends Module {
          if (!this.isItemStackTrackedItem(itemstack, trackedItem)) {
             this.onSwapStateItem(swapState, item2);
             if (SphereItems.isInt2(slot.id)) {
-               this.inventory().selectedSlot = slot.id - 36;
+               this.inventory().setSelectedSlot(slot.id - 36);
                this.options().useKey.setPressed(true);
                swapState.flag3 = true;
                this.update15();
@@ -889,7 +889,7 @@ public class AutoSwap extends Module {
    private int getInt() {
       this.flag6 = true;
       this.flag9 = true;
-      return this.inventory().selectedSlot;
+      return this.inventory().getSelectedSlot();
    }
 
    private Runnable getRunnable() {
@@ -897,7 +897,7 @@ public class AutoSwap extends Module {
    }
 
    private void onSwapStateItem(SwapState swapState, Item item2) {
-      swapState.value2 = this.inventory().selectedSlot;
+      swapState.value2 = this.inventory().getSelectedSlot();
       swapState.item = item2;
       swapState.flag = true;
       this.flag9 = true;
@@ -946,7 +946,7 @@ public class AutoSwap extends Module {
          InventoryActions.onIntRunnableModuleInt(l, runnable1, this, i1);
       } else {
          if (swapState.value2 >= 0) {
-            this.inventory().selectedSlot = swapState.value2;
+            this.inventory().setSelectedSlot(swapState.value2);
          }
 
          this.flag9 = false;
@@ -1006,7 +1006,7 @@ public class AutoSwap extends Module {
          } else {
             this.flag6 = true;
             int k = slot.id;
-            int l = this.inventory().selectedSlot;
+            int l = this.inventory().getSelectedSlot();
             Runnable runnable = this::setFlag6;
             int j = l;
             int i = k;

@@ -67,7 +67,7 @@ public final class JumpSwapState {
 
    private void onIntInt(int count, int count2) {
       if (this.flag2) {
-         Feature.mc.player.getInventory().selectedSlot = count;
+         Feature.mc.player.getInventory().setSelectedSlot(count);
       } else {
          SphereItems.onIntInt4(count2, count);
       }
@@ -117,7 +117,7 @@ public final class JumpSwapState {
 
    public void setSlot(Slot slot2) {
       if (Feature.mc.player != null && slot2 != null) {
-         this.value3 = Feature.mc.player.getInventory().selectedSlot;
+         this.value3 = Feature.mc.player.getInventory().getSelectedSlot();
          this.flag2 = SphereItems.isInt2(slot2.id);
          this.value2 = slot2.id;
          this.consumer.accept(true);
@@ -129,7 +129,7 @@ public final class JumpSwapState {
 
    private void onIntInt2(int count, int count2) {
       if (this.flag2) {
-         Feature.mc.player.getInventory().selectedSlot = count - 36;
+         Feature.mc.player.getInventory().setSelectedSlot(count - 36);
       } else {
          SphereItems.onIntInt4(count, count2);
       }

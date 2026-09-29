@@ -40,7 +40,7 @@ public class AnchorTap extends Module {
    }
 
    private int getInt() {
-      int i = this.inventory().selectedSlot;
+      int i = this.inventory().getSelectedSlot();
       if (this.inventory().getStack(i).getItem() != Items.GLOWSTONE) {
          return i;
       } else {
@@ -121,7 +121,7 @@ public class AnchorTap extends Module {
                         return;
                      }
 
-                     this.inventory().selectedSlot = i;
+                     this.inventory().setSelectedSlot(i);
                      this.value235 = 2;
                      this.value237 = this.delay.getInt2();
                      break;
@@ -142,7 +142,7 @@ public class AnchorTap extends Module {
                      break;
                   case 3:
                      if (this.value236 != -1) {
-                        this.inventory().selectedSlot = this.value236;
+                        this.inventory().setSelectedSlot(this.value236);
                      }
 
                      this.value235 = 4;
@@ -178,14 +178,14 @@ public class AnchorTap extends Module {
                }
 
                this.blockPos = blockhitresult.getBlockPos();
-               this.value236 = this.inventory().selectedSlot;
+               this.value236 = this.inventory().getSelectedSlot();
                if (this.isBlockPos(this.blockPos)) {
                   int k = this.getInt();
                   if (k == -1) {
                      return;
                   }
 
-                  this.inventory().selectedSlot = k;
+                  this.inventory().setSelectedSlot(k);
                   this.value235 = 4;
                } else {
                   if (this.getInt2() == -1) {

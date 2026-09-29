@@ -180,7 +180,7 @@ public final class InventoryActions {
    private static void onIntModuleRunnable(int count, Module module2, Runnable runnable) {
       try {
          if (Feature.mc.player != null) {
-            Feature.mc.player.getInventory().selectedSlot = count;
+            Feature.mc.player.getInventory().setSelectedSlot(count);
          }
       } finally {
          onModule2(module2);
@@ -375,7 +375,7 @@ public final class InventoryActions {
       if (Feature.mc.player == null) {
          onRunnable(runnable);
       } else {
-         int i = Feature.mc.player.getInventory().selectedSlot;
+         int i = Feature.mc.player.getInventory().getSelectedSlot();
          TickCounter.setInt(2);
          ActionQueue actionqueue = getActionQueueByRunnableModule(runnable, module2).getActionQueue2().getActionQueue();
          Runnable runnable1 = () -> InventoryActions.onIntInt(i, i);
@@ -396,7 +396,7 @@ public final class InventoryActions {
          onModule(module2);
 
          try {
-            Feature.mc.player.getInventory().selectedSlot = count;
+            Feature.mc.player.getInventory().setSelectedSlot(count);
          } catch (Throwable throwable) {
             onModule2(module2);
             onRunnable(runnable);

@@ -425,13 +425,13 @@ public class AutoSell extends Module {
          } else {
             for (int i = 0; i < 9; i++) {
                if (this.isItemStack(this.inventory().getStack(i))) {
-                  this.inventory().selectedSlot = i;
+                  this.inventory().setSelectedSlot(i);
                   this.time6 = getLong();
                   return true;
                }
             }
 
-            int k = this.inventory().selectedSlot;
+            int k = this.inventory().getSelectedSlot();
 
             for (int j = 9; j < 36; j++) {
                if (this.isItemStack(this.inventory().getStack(j))) {
@@ -976,10 +976,10 @@ public class AutoSell extends Module {
                   ItemStack itemstack = this.inventory().getStack(i);
                   this.text4 = getStringByString2(this.getStringByItemStack(itemstack));
                   if (i < 9) {
-                     this.inventory().selectedSlot = i;
+                     this.inventory().setSelectedSlot(i);
                   } else {
                      this.interactionManager()
-                        .clickSlot(this.player().playerScreenHandler.syncId, i, this.inventory().selectedSlot, SlotActionType.SWAP, this.player());
+                        .clickSlot(this.player().playerScreenHandler.syncId, i, this.inventory().getSelectedSlot(), SlotActionType.SWAP, this.player());
                   }
 
                   this.update17();
@@ -1010,7 +1010,7 @@ public class AutoSell extends Module {
          if (this.player() != null && this.interactionManager() != null) {
             ItemStack itemstack = this.getItemStack();
             int i = this.player().playerScreenHandler.syncId;
-            int j = this.inventory().selectedSlot + 36;
+            int j = this.inventory().getSelectedSlot() + 36;
             boolean flagx = this.player().playerScreenHandler.getCursorStack().isEmpty();
             switch (this.value244) {
                case 0:
@@ -1305,7 +1305,7 @@ public class AutoSell extends Module {
          }
       }
 
-      int k = this.inventory().selectedSlot + 36;
+      int k = this.inventory().getSelectedSlot() + 36;
 
       for (int j = 36; j < 45; j++) {
          if (j != k && this.inventory().getStack(j - 36).isEmpty()) {

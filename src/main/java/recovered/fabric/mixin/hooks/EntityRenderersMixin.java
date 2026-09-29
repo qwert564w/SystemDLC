@@ -13,7 +13,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(EntityRenderers.class)
 public abstract class EntityRenderersMixin {
     @Inject(method = "method_32177", at = @At("HEAD"), cancellable = true)
-    private static void systemdlcCreatePlayerRenderers(EntityRendererFactory.Context context, CallbackInfoReturnable<Map<net.minecraft.client.util.SkinTextures.Model, PlayerEntityRenderer>> cir) {
+    private static void systemdlcCreatePlayerRenderers(EntityRendererFactory.Context context, CallbackInfoReturnable<Map<net.minecraft.entity.player.PlayerSkinType, PlayerEntityRenderer>> cir) {
         cir.setReturnValue(EntityDispatcherHooks.getMapByContext(context));
     }
 }

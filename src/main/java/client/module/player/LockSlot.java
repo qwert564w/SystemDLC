@@ -57,7 +57,7 @@ public class LockSlot extends Module {
    }
 
    public boolean check3() {
-      return this.player() != null && this.isInt(this.inventory().selectedSlot);
+      return this.player() != null && this.isInt(this.inventory().getSelectedSlot());
    }
 
    @Override

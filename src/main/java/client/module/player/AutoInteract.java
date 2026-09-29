@@ -113,7 +113,7 @@ public class AutoInteract extends Module {
       if (this.autoInteractState != AutoInteractState.IDLE) {
          this.options().useKey.setPressed(false);
          if (this.value236 >= 0) {
-            this.inventory().selectedSlot = this.value236;
+            this.inventory().setSelectedSlot(this.value236);
          }
       }
 
@@ -122,7 +122,7 @@ public class AutoInteract extends Module {
 
    private void update13() {
       int i = this.flag ? 8 : this.value237 - 36;
-      this.inventory().selectedSlot = i;
+      this.inventory().setSelectedSlot(i);
       this.options().useKey.setPressed(true);
       this.autoInteractState = AutoInteractState.HOLD;
       this.value238 = 0;
@@ -205,7 +205,7 @@ public class AutoInteract extends Module {
    }
 
    private void setInt(int count) {
-      this.value236 = this.inventory().selectedSlot;
+      this.value236 = this.inventory().getSelectedSlot();
       this.value237 = count;
       this.flag = !SphereItems.isInt2(count);
       if (this.flag) {
@@ -285,7 +285,7 @@ public class AutoInteract extends Module {
       }
 
       if (this.value236 >= 0) {
-         this.inventory().selectedSlot = this.value236;
+         this.inventory().setSelectedSlot(this.value236);
       }
 
       this.autoInteractState = AutoInteractState.POST_COOLDOWN;

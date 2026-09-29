@@ -145,7 +145,7 @@ public class AutoCrystal extends Module {
                   Direction directionx = blockhitresult.getSide();
                   BlockPos blockpos = blockpos1.offset(directionx);
                   if (this.isBlockPos(blockpos)) {
-                     this.value235 = this.inventory().selectedSlot;
+                     this.value235 = this.inventory().getSelectedSlot();
                      this.blockPos = blockpos;
                      this.vec3d2 = blockhitresult.getPos();
                      this.blockPos2 = blockhitresult.getBlockPos();
@@ -216,7 +216,7 @@ public class AutoCrystal extends Module {
 
    private void update13() {
       if (this.value236 < 9) {
-         this.inventory().selectedSlot = this.value236;
+         this.inventory().setSelectedSlot(this.value236);
       } else {
          int i = this.player().currentScreenHandler.syncId;
          this.interactionManager().clickSlot(i, this.value236, this.value235, SlotActionType.SWAP, this.player());
@@ -317,7 +317,7 @@ public class AutoCrystal extends Module {
                if (this.value237 == -1) {
                   return ActionResult.PASS;
                } else {
-                  this.value235 = this.inventory().selectedSlot;
+                  this.value235 = this.inventory().getSelectedSlot();
                   this.value236 = -1;
                   this.blockPos = blockpos;
                   this.vec3d2 = null;
@@ -546,9 +546,9 @@ public class AutoCrystal extends Module {
          this.update15();
       } else {
          if (this.value237 < 9) {
-            this.inventory().selectedSlot = this.value237;
+            this.inventory().setSelectedSlot(this.value237);
          } else {
-            int i = this.inventory().selectedSlot;
+            int i = this.inventory().getSelectedSlot();
             int j = this.player().currentScreenHandler.syncId;
             this.interactionManager().clickSlot(j, this.value237, i, SlotActionType.SWAP, this.player());
          }
@@ -561,12 +561,12 @@ public class AutoCrystal extends Module {
 
    private void update20() {
       if (this.value236 != -1 && this.value236 >= 9) {
-         int i = this.inventory().selectedSlot;
+         int i = this.inventory().getSelectedSlot();
          int j = this.player().currentScreenHandler.syncId;
          this.interactionManager().clickSlot(j, this.value236, i, SlotActionType.SWAP, this.player());
       }
 
-      this.inventory().selectedSlot = this.value235;
+      this.inventory().setSelectedSlot(this.value235);
       this.vec3d = null;
       byte b0 = 0;
       AutoCrystalState autocrystalstate = AutoCrystalState.DONE;

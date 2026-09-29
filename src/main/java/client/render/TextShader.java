@@ -5,8 +5,8 @@ import client.data.GlyphKey;
 import client.data.VertexBatch;
 import client.util.MathUtil;
 import com.google.common.base.Suppliers;
-import com.mojang.blaze3d.platform.GlStateManager.DstFactor;
-import com.mojang.blaze3d.platform.GlStateManager.SrcFactor;
+import com.mojang.blaze3d.opengl.GlStateManager.DstFactor;
+import com.mojang.blaze3d.opengl.GlStateManager.SrcFactor;
 import com.mojang.blaze3d.systems.RenderSystem;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -25,7 +25,7 @@ import net.minecraft.client.render.BufferRenderer;
 import net.minecraft.client.render.BuiltBuffer;
 import net.minecraft.client.render.Tessellator;
 import net.minecraft.client.render.VertexFormats;
-import net.minecraft.client.render.VertexFormat.DrawMode;
+import com.mojang.blaze3d.vertex.VertexFormat.DrawMode;
 import org.joml.Matrix4f;
 
 public class TextShader {

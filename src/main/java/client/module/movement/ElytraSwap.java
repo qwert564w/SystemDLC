@@ -207,7 +207,7 @@ public class ElytraSwap extends Module {
    }
 
    private void onInt2(int count) {
-      int i = this.inventory().selectedSlot;
+      int i = this.inventory().getSelectedSlot();
       int j = SphereItems.getIntByInt(count);
       this.setRunnable(() -> ElytraSwap.onIntInt3(j, j));
    }
@@ -255,7 +255,7 @@ public class ElytraSwap extends Module {
          if (this.check3()) {
             int i = this.getIntByItem2(Items.FIREWORK_ROCKET);
             if (i != -1) {
-               int l = this.inventory().selectedSlot;
+               int l = this.inventory().getSelectedSlot();
                this.flag = true;
                Runnable runnablex = this.getRunnable();
                InventoryActions.onIntIntRunnableModule(i, l, runnablex, this);

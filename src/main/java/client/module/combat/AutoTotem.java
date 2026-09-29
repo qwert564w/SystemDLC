@@ -264,7 +264,7 @@ public class AutoTotem extends Module {
          this.setInt(count);
          this.onIntBoolean(count, true);
       } else {
-         int i = this.player().getInventory().selectedSlot;
+         int i = this.player().getInventory().getSelectedSlot();
          if (count < 9) {
             if (count != i) {
                if (this.value237 == -1) {

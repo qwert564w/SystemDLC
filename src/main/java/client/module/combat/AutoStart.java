@@ -297,7 +297,7 @@ public class AutoStart extends Module {
                         if (this.value241 != -1) {
                            this.value242 = this.getIntByItem(Items.ARROW);
                            if (this.value242 != -1) {
-                              this.value238 = playerentity.getInventory().selectedSlot;
+                              this.value238 = playerentity.getInventory().getSelectedSlot();
                               this.rotationUtil.update();
                               boolean flag = "Сначала стрелять".equals(this.mode.getString2());
                               if (flag) {
@@ -545,7 +545,7 @@ public class AutoStart extends Module {
    private void onInt(int count) {
       if (count >= 0 && !this.notInGame()) {
          if (count < 9) {
-            this.inventory().selectedSlot = count;
+            this.inventory().setSelectedSlot(count);
          } else {
             int i = Math.max(this.value238, 0);
             ClientPlayerInteractionManager clientplayerinteractionmanager = this.interactionManager();
@@ -554,7 +554,7 @@ public class AutoStart extends Module {
                clientplayerinteractionmanager.clickSlot(j, count, i, SlotActionType.SWAP, this.player());
             }
 
-            this.inventory().selectedSlot = i;
+            this.inventory().setSelectedSlot(i);
          }
       }
    }
@@ -569,7 +569,7 @@ public class AutoStart extends Module {
    private void update31() {
       if (this.value235 >= 1) {
          if (this.value238 >= 0) {
-            this.inventory().selectedSlot = this.value238;
+            this.inventory().setSelectedSlot(this.value238);
          }
 
          this.autoStartState = AutoStartState.DONE;

@@ -59,7 +59,7 @@ public class AutoTool extends Module {
          return false;
       } else if (this.client().crosshairTarget instanceof BlockHitResult blockhitresult) {
          BlockState blockstate = this.world().getBlockState(blockhitresult.getBlockPos());
-         int i = this.clientPlayer().getInventory().selectedSlot;
+         int i = this.clientPlayer().getInventory().getSelectedSlot();
          ItemStack itemstack = this.inventory().getStack(i);
          return this.isBlockStateItemStack(blockstate, itemstack);
       } else {
@@ -162,7 +162,7 @@ public class AutoTool extends Module {
          this.value236 = -1;
          this.value237 = -1;
          if (this.inGame() && this.value235 != -1) {
-            this.clientPlayer().getInventory().selectedSlot = this.value235;
+            this.clientPlayer().getInventory().setSelectedSlot(this.value235);
          }
 
          this.value235 = -1;
@@ -197,18 +197,18 @@ public class AutoTool extends Module {
          boolean flag1 = flagx && this.check5() && this.check3();
          if (flag1) {
             if (this.value235 == -1) {
-               this.value235 = this.clientPlayer().getInventory().selectedSlot;
+               this.value235 = this.clientPlayer().getInventory().getSelectedSlot();
             }
 
             if (!this.check4()) {
                int i = this.getInt();
                if (i != -1) {
                   if (i < 9) {
-                     if (i != this.clientPlayer().getInventory().selectedSlot) {
-                        this.clientPlayer().getInventory().selectedSlot = i;
+                     if (i != this.clientPlayer().getInventory().getSelectedSlot()) {
+                        this.clientPlayer().getInventory().setSelectedSlot(i);
                      }
                   } else if (this.value236 == -1 && !this.flag) {
-                     int j = this.clientPlayer().getInventory().selectedSlot;
+                     int j = this.clientPlayer().getInventory().getSelectedSlot();
                      this.onIntInt(i, j);
                      this.value236 = i;
                      this.value237 = j;

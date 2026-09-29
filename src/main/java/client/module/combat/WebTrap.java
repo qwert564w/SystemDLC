@@ -158,7 +158,7 @@ public class WebTrap extends Module {
                if (this.check3()) {
                   this.value239 = 0;
                   this.vec3d = Vec3d.ofCenter(this.blockPos).add(0.0, -0.5, 0.0);
-                  this.value236 = this.player().getInventory().selectedSlot;
+                  this.value236 = this.player().getInventory().getSelectedSlot();
                   this.setWebTrapState(WebTrapState.SWAP_SLOT);
                }
             }
@@ -204,7 +204,7 @@ public class WebTrap extends Module {
                   int i = this.getInt2();
                   if (i != -1) {
                      this.value237 = i;
-                     this.inventory().selectedSlot = i;
+                     this.inventory().setSelectedSlot(i);
                   } else {
                      this.value238 = this.getInt();
                      if (this.value238 == -1) {
@@ -219,7 +219,7 @@ public class WebTrap extends Module {
 
                      this.interactionManager()
                         .clickSlot(this.player().currentScreenHandler.syncId, this.value238, this.value237, SlotActionType.SWAP, this.player());
-                     this.inventory().selectedSlot = this.value237;
+                     this.inventory().setSelectedSlot(this.value237);
                   }
 
                   this.setWebTrapState(WebTrapState.PLACE);
@@ -250,7 +250,7 @@ public class WebTrap extends Module {
                         .clickSlot(this.player().currentScreenHandler.syncId, this.value238, this.value237, SlotActionType.SWAP, this.player());
                   }
 
-                  this.inventory().selectedSlot = this.value236;
+                  this.inventory().setSelectedSlot(this.value236);
                   this.value239++;
                   boolean flag = "Двe".equals(this.kolichestvo.getString2());
                   if (flag && this.value239 < 2 && this.check3()) {
@@ -258,7 +258,7 @@ public class WebTrap extends Module {
                      if (blockpos != null) {
                         this.blockPos = blockpos;
                         this.vec3d = Vec3d.ofCenter(this.blockPos).add(0.0, -0.5, 0.0);
-                        this.value236 = this.inventory().selectedSlot;
+                        this.value236 = this.inventory().getSelectedSlot();
                         this.value237 = -1;
                         this.value238 = -1;
                         this.setWebTrapState(WebTrapState.SWAP_SLOT);

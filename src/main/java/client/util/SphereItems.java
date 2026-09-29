@@ -83,8 +83,8 @@ public class SphereItems {
 
    public static void onInt(int count) {
       if (Feature.mc.player != null && count >= 0 && count <= 8) {
-         if (Feature.mc.player.getInventory().selectedSlot != count) {
-            Feature.mc.player.getInventory().selectedSlot = count;
+         if (Feature.mc.player.getInventory().getSelectedSlot() != count) {
+            Feature.mc.player.getInventory().setSelectedSlot(count);
             update2();
          }
       }

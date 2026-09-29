@@ -10,8 +10,8 @@ import client.render.ItemIconCache;
 import client.setting.HotkeySetting;
 import client.util.InventoryActions;
 import client.util.SphereItems;
-import com.mojang.blaze3d.platform.GlStateManager.DstFactor;
-import com.mojang.blaze3d.platform.GlStateManager.SrcFactor;
+import com.mojang.blaze3d.opengl.GlStateManager.DstFactor;
+import com.mojang.blaze3d.opengl.GlStateManager.SrcFactor;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.DataResult;
@@ -23,7 +23,7 @@ import net.minecraft.client.render.BufferBuilder;
 import net.minecraft.client.render.BufferRenderer;
 import net.minecraft.client.render.Tessellator;
 import net.minecraft.client.render.VertexFormats;
-import net.minecraft.client.render.VertexFormat.DrawMode;
+import com.mojang.blaze3d.vertex.VertexFormat.DrawMode;
 import net.minecraft.component.ComponentChanges;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.component.type.ProfileComponent;
@@ -56,7 +56,7 @@ public class SwapWheel extends Module {
 
    private void onInt(int count) {
       Runnable runnable = this.getRunnable();
-      int i = this.inventory().selectedSlot;
+      int i = this.inventory().getSelectedSlot();
       if (SphereItems.isInt2(count)) {
          int j = count - 36;
          InventoryActions.onIntIntRunnableModule(j, i, runnable, this);
@@ -352,7 +352,7 @@ public class SwapWheel extends Module {
       if (bundleslot != null) {
          int l = bundleslot.getBundleSlot().id;
          int i1 = bundleslot.getIndexInBundle();
-         int j1 = this.inventory().selectedSlot;
+         int j1 = this.inventory().getSelectedSlot();
          Runnable runnable = this.getRunnable();
          int k = j1;
          int j = i1;
