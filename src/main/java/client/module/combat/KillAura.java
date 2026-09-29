@@ -14,31 +14,33 @@ import net.minecraft.util.math.Box;
 import net.minecraft.util.math.MathHelper;
 
 /**
- * Aura for Fabric 1.21.4 using ordinary Minecraft interaction APIs.
- * No packet spoofing, hitbox spoofing, or anti-cheat bypass logic.
+ * Intel client Aura for Fabric 1.21.4.
+ *
+ * Uses the normal client interaction manager and vanilla attack cooldown.
+ * No packet spoofing, hitbox spoofing, or anti-cheat bypass behavior.
  */
 public final class KillAura extends Module {
-   private final SliderSetting range = slider("Дистанция", "Максимальная дистанция выбора и атаки", 3.2, 2.0, 5.5, 0.1);
-   private final SliderSetting fov = slider("FOV", "Максимальный угол поиска", 140.0, 20.0, 360.0, 5.0);
-   private final SliderSetting rotationSpeed = slider("Скорость ротации", "Плавность доведения взгляда", 0.42, 0.10, 1.0, 0.02);
-   private final SliderSetting cooldown = slider("Кулдаун", "Минимальная готовность обычной атаки", 0.92, 0.50, 1.0, 0.01);
-   private final SliderSetting targetHeight = slider("Точка цели", "Высота точки внутри хитбокса", 0.58, 0.15, 0.90, 0.01);
+   private final SliderSetting range = slider("Дистанция", "Максимальная дистанция атаки", 3.2, 2.0, 5.0, 0.1);
+   private final SliderSetting fov = slider("FOV", "Угол поиска цели", 160.0, 20.0, 360.0, 5.0);
+   private final SliderSetting rotationSpeed = slider("Скорость ротации", "Плавность доведения взгляда", 0.34, 0.08, 1.0, 0.02);
+   private final SliderSetting targetHeight = slider("Точка цели", "Вертикальная точка внутри хитбокса", 0.58, 0.15, 0.90, 0.01);
+   private final SliderSetting attackThreshold = slider("Готовность атаки", "Минимальный ванильный cooldown", 0.92, 0.50, 1.0, 0.01);
    private final BooleanSetting players = bool("Игроки", "Выбирать игроков", true);
    private final BooleanSetting mobs = bool("Мобы", "Выбирать живых мобов", false);
-   private final BooleanSetting throughWalls = bool("Через стены", "Разрешить выбор без прямой видимости", false);
-   private final BooleanSetting nearestPoint = bool("Ближайшая точка", "Выбирать ближайшую точку хитбокса", true);
-   private final BooleanSetting attackOnlyWhenReady = bool("Только готовая атака", "Не атаковать до ванильного кулдауна", true);
+   private final BooleanSetting requireLineOfSight = bool("Проверка видимости", "Атаковать только при прямой видимости", true);
+   private final BooleanSetting nearestPoint = bool("Ближайшая точка", "Наводиться на ближайшую точку хитбокса", true);
+   private final BooleanSetting attackOnlyWhenReady = bool("Только готовая атака", "Ждать полного ванильного cooldown", true);
 
    private LivingEntity target;
-   private long lastAttackMs;
-   private float lastYaw;
-   private float lastPitch;
+   private float smoothYaw;
+   private float smoothPitch;
 
    public KillAura() {
       super("Aura", Category.COMBAT);
       this.addSettings(new Setting[] {
-         this.range, this.fov, this.rotationSpeed, this.cooldown, this.targetHeight,
-         this.players, this.mobs, this.throughWalls, this.nearestPoint, this.attackOnlyWhenReady
+         this.range, this.fov, this.rotationSpeed, this.targetHeight,
+         this.attackThreshold, this.players, this.mobs,
+         this.requireLineOfSight, this.nearestPoint, this.attackOnlyWhenReady
       });
    }
 
@@ -59,10 +61,9 @@ public final class KillAura extends Module {
    @Override
    public void onEnable() {
       this.target = null;
-      this.lastAttackMs = 0L;
       if (this.player() != null) {
-         this.lastYaw = this.player().getYaw();
-         this.lastPitch = this.player().getPitch();
+         this.smoothYaw = this.player().getYaw();
+         this.smoothPitch = this.player().getPitch();
       }
    }
 
@@ -79,19 +80,19 @@ public final class KillAura extends Module {
       }
 
       this.target = this.findTarget();
-      if (this.target == null) return;
+      if (this.target == null) {
+         return;
+      }
 
       this.rotateTo(this.target);
 
-      float progress = this.player().getAttackCooldownProgress(0.0F);
-      if (this.attackOnlyWhenReady.isFlag3() && progress < this.cooldown.getValue()) return;
-
-      long now = System.currentTimeMillis();
-      if (now - this.lastAttackMs < 45L) return;
+      float cooldown = this.player().getAttackCooldownProgress(0.0F);
+      if (this.attackOnlyWhenReady.isFlag3() && cooldown < this.attackThreshold.getValue()) {
+         return;
+      }
 
       this.interactionManager().attackEntity(this.player(), this.target);
       this.player().swingHand(this.mainHand());
-      this.lastAttackMs = now;
    }
 
    private LivingEntity findTarget() {
@@ -101,12 +102,13 @@ public final class KillAura extends Module {
       List<LivingEntity> candidates = new ArrayList<>();
 
       for (LivingEntity living : this.world().getEntitiesByClass(
-         LivingEntity.class, searchBox, entity -> entity != this.player() && entity.isAlive()
+         LivingEntity.class,
+         searchBox,
+         entity -> entity != this.player() && entity.isAlive() && this.isAllowedType(entity)
       )) {
-         if (!this.isAllowedType(living)) continue;
-         if (!this.throughWalls.isFlag3() && !this.player().canSee(living)) continue;
-         if (this.angleTo(living) > maxFov) continue;
          if (this.player().distanceTo(living) > maxRange) continue;
+         if (this.angleTo(living) > maxFov) continue;
+         if (this.requireLineOfSight.isFlag3() && !this.player().canSee(living)) continue;
          candidates.add(living);
       }
 
@@ -132,37 +134,51 @@ public final class KillAura extends Module {
       return Math.abs(MathHelper.wrapDegrees(desiredYaw - this.player().getYaw()));
    }
 
-   private double[] aimPoint(LivingEntity entity) {
+   private Vec3Target aimPoint(LivingEntity entity) {
       Box box = entity.getBoundingBox();
       double y = box.minY + (box.maxY - box.minY) * this.targetHeight.getValue();
+
       if (!this.nearestPoint.isFlag3()) {
-         return new double[]{(box.minX + box.maxX) * 0.5, y, (box.minZ + box.maxZ) * 0.5};
+         return new Vec3Target(
+            (box.minX + box.maxX) * 0.5,
+            y,
+            (box.minZ + box.maxZ) * 0.5
+         );
       }
-      double x = MathHelper.clamp(this.player().getX(), box.minX, box.maxX);
-      double z = MathHelper.clamp(this.player().getZ(), box.minZ, box.maxZ);
-      return new double[]{x, y, z};
+
+      return new Vec3Target(
+         MathHelper.clamp(this.player().getX(), box.minX, box.maxX),
+         y,
+         MathHelper.clamp(this.player().getZ(), box.minZ, box.maxZ)
+      );
    }
 
    private void rotateTo(LivingEntity entity) {
-      double[] point = this.aimPoint(entity);
-      double dx = point[0] - this.player().getEyeX();
-      double dy = point[1] - this.player().getEyeY();
-      double dz = point[2] - this.player().getEyeZ();
+      Vec3Target point = this.aimPoint(entity);
+      double dx = point.x - this.player().getEyeX();
+      double dy = point.y - this.player().getEyeY();
+      double dz = point.z - this.player().getEyeZ();
       double horizontal = Math.sqrt(dx * dx + dz * dz);
 
       float desiredYaw = (float)(Math.toDegrees(Math.atan2(dz, dx)) - 90.0);
       float desiredPitch = (float)(-Math.toDegrees(Math.atan2(dy, horizontal)));
 
-      float factor = this.rotationSpeed.getValueAsFloat();
-      float yawDelta = MathHelper.wrapDegrees(desiredYaw - this.lastYaw) * factor;
-      float pitchDelta = (desiredPitch - this.lastPitch) * factor;
+      float factor = MathHelper.clamp(this.rotationSpeed.getValueAsFloat(), 0.05F, 1.0F);
+      float yawDelta = MathHelper.wrapDegrees(desiredYaw - this.smoothYaw);
+      float pitchDelta = desiredPitch - this.smoothPitch;
 
-      yawDelta = MathHelper.clamp(yawDelta, -12.0F, 12.0F);
-      pitchDelta = MathHelper.clamp(pitchDelta, -9.0F, 9.0F);
+      float maxYawStep = 4.0F + 14.0F * factor;
+      float maxPitchStep = 3.0F + 10.0F * factor;
 
-      this.lastYaw += yawDelta;
-      this.lastPitch = MathHelper.clamp(this.lastPitch + pitchDelta, -90.0F, 90.0F);
-      this.player().setYaw(this.lastYaw);
-      this.player().setPitch(this.lastPitch);
+      yawDelta = MathHelper.clamp(yawDelta * factor, -maxYawStep, maxYawStep);
+      pitchDelta = MathHelper.clamp(pitchDelta * factor, -maxPitchStep, maxPitchStep);
+
+      this.smoothYaw += yawDelta;
+      this.smoothPitch = MathHelper.clamp(this.smoothPitch + pitchDelta, -90.0F, 90.0F);
+
+      this.player().setYaw(this.smoothYaw);
+      this.player().setPitch(this.smoothPitch);
    }
+
+   private record Vec3Target(double x, double y, double z) {}
 }
