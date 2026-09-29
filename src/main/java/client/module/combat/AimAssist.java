@@ -364,16 +364,25 @@ public class AimAssist extends Module {
          float f1 = this.player().getPitch();
          double d7 = getDoubleByDouble(d5 - f);
          double d8 = d6 - f1;
-         double d9 = 1.0 - Math.pow(0.72, Math.max(value, 0.01));
+         double angle = Math.sqrt(d7 * d7 + d8 * d8);
+         double response = 1.0 - Math.pow(0.72, Math.max(value, 0.01));
+         double distanceFactor = MathHelper.clamp(d4 / 6.0, 0.75, 1.15);
+         double angleFactor = MathHelper.clamp(0.55 + angle / 75.0, 0.55, 1.0);
+         double d9 = MathHelper.clamp(response * distanceFactor * angleFactor, 0.02, 0.92);
          double d10 = d7 * d9;
          double d11 = d8 * d9;
-         if (Math.abs(d7) < 0.02) {
+
+         // Stable dead-zone: prevents micro jitter when already aligned.
+         if (Math.abs(d7) < 0.015) {
             d10 = d7;
          }
-
-         if (Math.abs(d8) < 0.02) {
+         if (Math.abs(d8) < 0.015) {
             d11 = d8;
          }
+
+         // Keep a single tick from making an excessively large snap.
+         d10 = MathHelper.clamp(d10, -18.0, 18.0);
+         d11 = MathHelper.clamp(d11, -12.0, 12.0);
 
          float f2 = f + (float)d10;
          float f3 = MathHelper.clamp(f1 + (float)d11, -90.0F, 90.0F);
