@@ -273,7 +273,7 @@ public final class WaypointStore {
 
    public static boolean check() {
       String s = getString2();
-      return s != null && !"__singleplayer__".equals(s);
+      return s != null;
    }
 
    private Waypoint getWaypointByStringIntIntIntStringBoolean(String text, int count, int count2, int count3, String text2, boolean flag) {

@@ -44,7 +44,7 @@ public abstract class ModuleWidget<M extends ButtonWidget> extends PanelWidget {
       } else {
          float f4 = this.value235;
          float f5 = this.getFloat8();
-         float f3 = 32.0F;
+         float f3 = 38.0F;
          float f2 = this.value237;
          float f1 = f5;
          float f = f4;
