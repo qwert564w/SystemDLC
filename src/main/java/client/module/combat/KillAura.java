@@ -8,7 +8,6 @@ import client.setting.SliderSetting;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.math.MathHelper;
@@ -113,16 +112,14 @@ public final class KillAura extends Module {
       double maxFov = this.fov.getValue() * 0.5;
       List<LivingEntity> candidates = new ArrayList<>();
 
-      for (Entity entity : this.world().getEntities()) {
-         if (!(entity instanceof LivingEntity living) || !living.isAlive() || living == this.player()) {
+      for (LivingEntity living : this.world().getEntitiesByClass(
+         LivingEntity.class, this.player().getBoundingBox().expand(maxRange), entity -> true
+      )) {
+         if (!living.isAlive() || living == this.player()) {
             continue;
          }
 
          if (!this.isAllowedType(living)) {
-            continue;
-         }
-
-         if (this.player().distanceTo(living) > maxRange) {
             continue;
          }
 
