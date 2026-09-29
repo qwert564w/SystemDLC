@@ -37,7 +37,7 @@ public class CosmeticFeatureRenderer extends FeatureRenderer<PlayerEntityRenderS
             CosmeticModel cosmetic = LocalCosmetics.modelFor(idx);
             if (cosmetic == null || cosmetic.getTextureId() == null) continue;
             Identifier tex = cosmetic.getTextureId();
-            RenderLayer layer = RenderLayer.getEntityCutoutNoCull(tex);
+            RenderLayer layer = RenderLayer.getEntityTranslucent(tex);
             try {
                 commandQueue.submitCustom(matrices, layer, (entry, vertexConsumer) -> {
                     MatrixStack local = new MatrixStack();

@@ -55,7 +55,7 @@ public class GeckolibCosmeticRenderer {
             }
 
             Identifier var7 = var1.getTextureId();
-            RenderLayer var8 = RenderLayer.getEntityCutoutNoCull(var7);
+            RenderLayer var8 = RenderLayer.getEntityTranslucent(var7);
             VertexConsumer var9 = var3.getBuffer(var8);
             RenderSystemHelper.disableCull();
 

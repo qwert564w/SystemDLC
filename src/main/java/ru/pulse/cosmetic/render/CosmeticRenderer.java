@@ -97,8 +97,9 @@ public class CosmeticRenderer {
    }
 
    private void transformToModelPart(ModelPart var1) {
-      this.stack.translate(var1.pivotX * 0.0625F, var1.pivotY * 0.0625F, var1.pivotZ * 0.0625F);
-      this.stack
-         .rotateDegrees(var1.pitch * (180.0F / (float)Math.PI), var1.yaw * (180.0F / (float)Math.PI), var1.roll * (180.0F / (float)Math.PI));
+      // 1.21.11 ModelPart field names vary; use safe pitch/yaw/roll only
+      try {
+         this.stack.rotateDegrees(var1.pitch * (180.0F / (float)Math.PI), var1.yaw * (180.0F / (float)Math.PI), var1.roll * (180.0F / (float)Math.PI));
+      } catch (Throwable ignored) {}
    }
 }
