@@ -25,7 +25,7 @@ jobs:
           chmod +x gradlew
           set +e
           ./gradlew --no-daemon clean build 2>&1 | tee build.log
-          status=$PIPESTATUS
+          status=${PIPESTATUS[0]}
           exit $status
       - name: Upload build log
         if: always()
@@ -50,9 +50,11 @@ jobs:
           if-no-files-found: warn
       - name: Verify JAR
         run: |
-          test -f build/libs/intel-client-1.1.0.jar
+          find build/libs -maxdepth 1 -type f -printf "%f %s bytes\n"
+          test -s build/libs/intel-client-1.1.0.jar
           unzip -t build/libs/intel-client-1.1.0.jar >/dev/null
           jar tf build/libs/intel-client-1.1.0.jar | grep -q 'fabric.mod.json'
+          echo "JAR verified: $(du -h build/libs/intel-client-1.1.0.jar | cut -f1)"
       - name: Upload build artifact
         uses: actions/upload-artifact@v4
         with:
@@ -64,10 +66,7 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           gh release delete v1.1.0-intel-client --yes --cleanup-tag || true
-          gh release create v1.1.0-intel-client build/libs/intel-client-1.1.0.jar \
-            --target "${{ github.sha }}" \
-            --title "intel client 1.1.0" \
-            --notes "Fabric 1.21.11 migration and build fixes."
+          gh release create v1.1.0-intel-client build/libs/intel-client-1.1.0.jar --target "${{ github.sha }}" --title "intel client 1.1.0 — Minecraft 1.21.11" --notes "Minecraft 1.21.11/Fabric port, compile fixes, GUI polish, and optimized rendering resources."
       - name: Verify release
         env:
           GH_TOKEN: ${{ github.token }}
