@@ -1,19 +1,15 @@
 plugins {
-    id 'fabric-loom' version '1.9-SNAPSHOT'
+    id 'fabric-loom' version '1.14.10'
     id 'java'
 }
 
-version = '1.0.5'
+version = '1.1.0'
 group = 'recovered'
 
-base {
-    archivesName = 'intel-client'
-}
+base { archivesName = 'intel-client' }
 
 java {
-    toolchain {
-        languageVersion = JavaLanguageVersion.of(21)
-    }
+    toolchain { languageVersion = JavaLanguageVersion.of(21) }
     sourceCompatibility = JavaVersion.VERSION_21
     targetCompatibility = JavaVersion.VERSION_21
 }
@@ -24,10 +20,10 @@ repositories {
 }
 
 dependencies {
-    minecraft 'com.mojang:minecraft:1.21.4'
-    mappings 'net.fabricmc:yarn:1.21.4+build.8:v2'
-    modImplementation 'net.fabricmc:fabric-loader:0.16.10'
-    modImplementation 'net.fabricmc.fabric-api:fabric-api:0.119.4+1.21.4'
+    minecraft 'com.mojang:minecraft:1.21.11'
+    mappings 'net.fabricmc:yarn:1.21.11+build.5:v2'
+    modImplementation 'net.fabricmc:fabric-loader:0.18.4'
+    modImplementation 'net.fabricmc.fabric-api:fabric-api:0.141.1+1.21.11'
 }
 
 tasks.withType(JavaCompile).configureEach {
@@ -72,14 +68,12 @@ def optimizeTextures = tasks.register('optimizeTextures') {
 
 tasks.named('jar') {
     dependsOn optimizeTextures
-    archiveFileName = 'intel-client-1.0.5.jar'
+    archiveFileName = 'intel-client-1.1.0.jar'
 }
-
 tasks.named('remapJar') {
     dependsOn optimizeTextures
-    archiveFileName = 'intel-client-1.0.5.jar'
+    archiveFileName = 'intel-client-1.1.0.jar'
 }
-
 tasks.named('runClient') {
     jvmArgs '-Dsystemdlc.native=true', '--enable-native-access=ALL-UNNAMED',
             '--add-opens', 'jdk.attach/com.sun.tools.attach=ALL-UNNAMED'
