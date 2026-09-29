@@ -3,7 +3,7 @@ plugins {
     id 'java'
 }
 
-version = '1.0.3'
+version = '1.0.4'
 group = 'recovered'
 
 base {
@@ -72,12 +72,12 @@ def optimizeTextures = tasks.register('optimizeTextures') {
 
 tasks.named('jar') {
     dependsOn optimizeTextures
-    archiveFileName = 'intel-client-1.0.3.jar'
+    archiveFileName = 'intel-client-1.0.4.jar'
 }
 
 tasks.named('remapJar') {
     dependsOn optimizeTextures
-    archiveFileName = 'intel-client-1.0.3.jar'
+    archiveFileName = 'intel-client-1.0.4.jar'
 }
 
 tasks.named('runClient') {
