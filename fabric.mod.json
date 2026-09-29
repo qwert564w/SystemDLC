@@ -1,16 +1,12 @@
 {
   "schemaVersion": 1,
   "id": "systemdlcrecovered",
-  "version": "1.0.0",
-  "name": "SystemDLC Recovered",
+  "version": "1.1.2-1.21.11",
+  "name": "intel client",
   "environment": "client",
   "entrypoints": {
-    "preLaunch": [
-      "recovered.fabric.nativebridge.SystemDlcPreLaunch"
-    ],
-    "client": [
-      "client.util.ClientEntrypoint"
-    ]
+    "preLaunch": ["recovered.fabric.nativebridge.SystemDlcPreLaunch"],
+    "client": ["client.util.ClientEntrypoint"]
   },
   "mixins": [
     "systemdlc.profile.mixins.json",
@@ -18,8 +14,8 @@
     "systemdlc.hooks.mixins.json"
   ],
   "depends": {
-    "fabricloader": ">=0.16.10",
-    "minecraft": "=1.21.4",
+    "fabricloader": ">=0.18.4",
+    "minecraft": "=1.21.11",
     "java": ">=21"
   }
 }

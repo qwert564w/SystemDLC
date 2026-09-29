@@ -19,7 +19,6 @@ import client.module.combat.AutoStart;
 import client.module.combat.AutoTotem;
 import client.module.combat.CrystalTap;
 import client.module.combat.Hitbox;
-import client.module.combat.KillAura;
 import client.module.combat.MaceSwap;
 import client.module.combat.ShieldBreaker;
 import client.module.combat.ShieldTap;
@@ -139,7 +138,6 @@ public class ModuleIndex {
       setValue(100);
       setSupplier(AimAssist::new);
       setSupplier(TriggerBot::new);
-      setSupplier(KillAura::new);
       setSupplier(Hitbox::new);
       setSupplier(ShieldBreaker::new);
       setSupplier(AutoTotem::new);

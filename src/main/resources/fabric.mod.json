@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "id": "systemdlcrecovered",
-  "version": "1.1.0",
+  "version": "1.1.2-1.21.11",
   "name": "intel client",
   "environment": "client",
   "entrypoints": {
