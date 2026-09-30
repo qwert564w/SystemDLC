@@ -1,0 +1,37 @@
+name: Build Aura 1.21.4
+
+on:
+  push:
+    branches: [aura-1.21.4-build]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+          cache: gradle
+      - name: Build
+        run: |
+          chmod +x gradlew
+          ./gradlew --no-daemon clean build
+      - name: Verify
+        run: |
+          JAR=build/libs/intel-client-1.0.2-aura.jar
+          test -s "$JAR"
+          unzip -t "$JAR" >/dev/null
+          jar tf "$JAR" | grep -q 'fabric.mod.json'
+          jar tf "$JAR" | grep -q 'client/module/combat/Aura.class'
+          echo "JAR verified: $(du -h "$JAR" | cut -f1)"
+      - name: Upload JAR
+        uses: actions/upload-artifact@v4
+        with:
+          name: intel-client-1.0.2-aura-1.21.4
+          path: build/libs/intel-client-1.0.2-aura.jar
