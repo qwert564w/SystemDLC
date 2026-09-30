@@ -64,7 +64,7 @@ jobs:
       - name: Upload build artifact
         uses: actions/upload-artifact@v4
         with:
-          name: intel-client-1.21.11
+          name: intel-client-1.21.4
           path: build/libs/intel-client-*.jar
           if-no-files-found: error
 
@@ -73,9 +73,9 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           JAR=$(ls build/libs/intel-client-*.jar | head -1)
-          TAG="v1.1.2-1.21.11"
+          TAG="v1.1.2-1.21.4"
           gh release delete "$TAG" --yes --cleanup-tag || true
           gh release create "$TAG" "$JAR" \
             --target "${{ github.sha }}" \
-            --title "intel client 1.1.2 — Minecraft 1.21.11" \
-            --notes "Fabric 1.21.11 port. KillAura removed. TriggerBot/AimAssist as primary combat. Clean build without gradle cache."
+            --title "intel client 1.1.2 — Minecraft 1.21.4" \
+            --notes "Fabric 1.21.4 port. Aura + AimAssist + TriggerBot combat modules. Cosmetics use the 1.21.4 port. Clean build without gradle cache."
