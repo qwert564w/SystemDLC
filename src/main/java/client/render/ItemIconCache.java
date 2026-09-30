@@ -4,7 +4,7 @@ import client.data.LruCache;
 import client.module.Feature;
 import client.util.IconRenderFlag;
 import client.util.ItemKey;
-import com.mojang.blaze3d.opengl.GlStateManager;
+import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 import java.nio.ByteBuffer;
 import java.util.Iterator;
