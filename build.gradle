@@ -68,11 +68,11 @@ def optimizeTextures = tasks.register('optimizeTextures') {
 
 tasks.named('jar') {
     dependsOn optimizeTextures
-    archiveFileName = 'intel-client-1.1.2-1.21.11.jar'
+    archiveFileName = 'intel-client-1.2.0-1.21.4.jar'
 }
 tasks.named('remapJar') {
     dependsOn optimizeTextures
-    archiveFileName = 'intel-client-1.1.2-1.21.11.jar'
+    archiveFileName = 'intel-client-1.2.0-1.21.4.jar'
 }
 tasks.named('runClient') {
     jvmArgs '-Dsystemdlc.native=true', '--enable-native-access=ALL-UNNAMED',
