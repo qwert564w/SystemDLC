@@ -1,6 +1,6 @@
 package client.render;
 
-import com.mojang.blaze3d.opengl.GlStateManager;
+import com.mojang.blaze3d.platform.GlStateManager;
 import java.nio.ByteBuffer;
 import net.minecraft.client.gl.SimpleFramebuffer;
 import org.lwjgl.BufferUtils;
