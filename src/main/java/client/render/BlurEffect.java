@@ -2,8 +2,8 @@ package client.render;
 
 import client.concurrent.ResourceManagerHooks;
 import client.module.client.StreamBypass;
-import com.mojang.blaze3d.opengl.GlStateManager.DstFactor;
-import com.mojang.blaze3d.opengl.GlStateManager.SrcFactor;
+import com.mojang.blaze3d.platform.GlStateManager.DstFactor;
+import com.mojang.blaze3d.platform.GlStateManager.SrcFactor;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gl.Defines;
