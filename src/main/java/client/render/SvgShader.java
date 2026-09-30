@@ -3,7 +3,7 @@ package client.render;
 import client.data.FloatParser;
 import client.data.SvgPath;
 import client.module.CategoryType;
-import com.mojang.blaze3d.opengl.GlStateManager;
+import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 import java.awt.geom.PathIterator;
 import java.awt.geom.Path2D.Float;
