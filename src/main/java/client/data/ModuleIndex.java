@@ -10,7 +10,7 @@ import client.module.client.SoundsModule;
 import client.module.client.StreamBypass;
 import client.module.client.ThemeModule;
 import client.module.client.Waypoints;
-import client.module.combat.AimAssist;
+import client.module.combat.AimAssist;\nimport client.module.combat.Aura;
 import client.module.combat.AnchorTap;
 import client.module.combat.AntiBot;
 import client.module.combat.AutoAnchor;
@@ -136,7 +136,7 @@ public class ModuleIndex {
       setSupplier(RPSpoofer::new);
       setSupplier(StreamBypass::new);
       setValue(100);
-      setSupplier(AimAssist::new);
+      setSupplier(AimAssist::new);\n      setSupplier(Aura::new);
       setSupplier(TriggerBot::new);
       setSupplier(Hitbox::new);
       setSupplier(ShieldBreaker::new);
