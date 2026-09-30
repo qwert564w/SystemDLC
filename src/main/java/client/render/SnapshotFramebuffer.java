@@ -1,7 +1,7 @@
 package client.render;
 
 import client.module.Feature;
-import com.mojang.blaze3d.opengl.GlStateManager;
+import com.mojang.blaze3d.platform.GlStateManager;
 import net.minecraft.client.gl.Framebuffer;
 import net.minecraft.client.gl.SimpleFramebuffer;
 import org.lwjgl.opengl.GL11;
